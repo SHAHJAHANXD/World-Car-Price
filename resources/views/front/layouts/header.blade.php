@@ -26,9 +26,19 @@
                             <img src="{{ asset('front') }}/logo.png" alt="">
                         </a>
                     </div>
-
+                    @php
+                    $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                    $country = \App\Models\Country::where('id', $UserData->country_id)->first();
+                    @endphp
                     <div class="header__menu">
                         <ul class="header__nav">
+                            <li class="header__nav-item">
+                                <a href="{{ route('country') }}" class="header__nav-link" style="    background: red;
+                                color: white;
+                                font-weight: 700;
+                                padding: 15px 10px 15px 10px;
+                                border-radius: 5px;">{{ $country->symbol }} | Change</a>
+                            </li>
                             <li class="header__nav-item">
                                 <a href="" class="header__nav-link">Search</a>
                             </li>

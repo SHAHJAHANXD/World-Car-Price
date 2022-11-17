@@ -69,6 +69,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.countries') }}" class="nav-link">
+                        <i class="nav-icon fas fa-columns"></i>
+                        <p>
+                            Countries
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.Brands') }}" class="nav-link">
                         <i class="nav-icon fas fa-money-check"></i>
                         <p>
@@ -85,13 +93,36 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link">
+                        <i class="nav-icon fab fa-product-hunt"></i>
+                        <p>
+                            False Ceiling
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.false_ceiling') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.FalseCeiling') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Items</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {{-- <li class="nav-item">
                     <a href="{{ route('admin.FalseCeiling') }}" class="nav-link">
                         <i class="nav-icon fab fa-product-hunt"></i>
                         <p>
                            False Ceiling
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 @endif
                 <li class="nav-item">
                     <a href="{{ route('admin.products1') }}" class="nav-link">

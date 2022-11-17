@@ -14,9 +14,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use AmrShawky\LaravelCurrency\Facade\Currency;
+use App\Models\Country;
+use App\Models\UserData;
 
 class UserController extends Controller
 {
+    public function country(Request $request)
+    {
+        $ip = $request->ip();
+        $country = Country::get();
+        return view('front.index.country', compact('country', 'ip'));
+    }
     public function FalseCeiling()
     {
         if (Auth::user()->role == 'Admin') {
@@ -107,15 +115,25 @@ class UserController extends Controller
         $User->save();
         return redirect()->back()->with('success', 'Status updated successfully!');
     }
-    public function index()
+    public function change_country(Request $request, $id)
+    {
+        $ip = $request->ip();
+        $UserData = UserData::where('ip', $ip)->first();
+        $UserData->country_id = $id;
+        $UserData->save();
+        return redirect('/');
+    }
+    public function index(Request $request)
     {
 
-        // $Products = Products::first('Price');
-        // $currency = \Currency::convert()->from('USD')->to('PKR')->amount(150)->get();
-        // $str = $currency ;
-        // $str_arr = explode('.', $str);
-        // dd($str_arr[0]);
-
+        $ip =  $request->ip();
+        $found = UserData::where('ip', $ip)->count();
+        if ($found == 0) {
+            $UserData = new UserData();
+            $UserData->ip = $ip;
+            $UserData->country_id = 227;
+            $UserData->save();
+        }
         $category_car = category::where('category_name', 'Car')->first();
         $cars = Products::where('Category', $category_car->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
 
@@ -131,8 +149,6 @@ class UserController extends Controller
         $category_bicycle = category::where('category_name', 'BiCycles')->first();
         $bicycle = Products::where('Category', $category_bicycle->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
 
-        // $category_e_bicycle = category::where('category_name', 'E BiCycles')->first();
-        // $e_bicycle = Products::where('Category', $category_e_bicycle->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
 
         $Traffic = Traffic::where('id', 1)->count();
         if ($Traffic == 0) {
@@ -144,68 +160,77 @@ class UserController extends Controller
             $user->total_views = $user->total_views + 1;
             $user->save();
         }
-        return view('front.index.index', compact('cars', 'bikes', 'e_cars', 'e_bikes', 'bicycle'));
+        return view('front.index.index', compact('cars', 'ip', 'bikes', 'e_cars', 'e_bikes', 'bicycle'));
     }
-    public function wallpapers()
+    public function wallpapers(Request $request)
     {
+        $ip = $request->ip();
         $FalseCeiling = FalseCeiling::get();
-        return view('front.index.FalseCeiling', compact('FalseCeiling'));
+        return view('front.index.FalseCeiling', compact('FalseCeiling', 'ip'));
     }
 
-    public function productcategory($category)
+    public function productcategory(Request $request, $category)
     {
+        $ip = $request->ip();
         $category = vehicle_products::where('category', $category)->get();
-        return view('front.category.index', compact('category'));
+        return view('front.category.index', compact('category','ip'));
     }
-    public function product_detail($id)
+    public function product_detail(Request $request, $id)
     {
         $found = Products::where('id', $id)->count();
         if ($found == 0) {
             return redirect()->back();
         } else {
+            $ip = $request->ip();
             $Products = Products::where('id', $id)->first();
-            return view('front.index.details', compact('Products'));
+            return view('front.index.details', compact('Products','ip'));
         }
     }
-    public function wallpapers_detail($id)
+    public function wallpapers_detail(Request $request, $id)
     {
+        $ip = $request->ip();
         $FalseCeiling = FalseCeiling::where('id', $id)->first();
-        return view('front.index.wallpapers_detail', compact('FalseCeiling'));
+        return view('front.index.wallpapers_detail', compact('FalseCeiling', 'ip'));
     }
 
-    public function product_detail_by_category($id)
+    public function product_detail_by_category(Request $request, $id)
     {
+        $ip = $request->ip();
         $category = category::where('id', $id)->first();
         $brand = Brand::where('Brand_category', $category->category_name)->get();
         $cars = Products::where('category', $id)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
         $carss = Products::where('category', $id)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
-        return view('front.index.details_category', compact('cars','carss', 'brand'));
+        return view('front.index.details_category', compact('cars', 'carss', 'brand', 'ip'));
     }
-    public function product_detail_by_brand($brands)
+    public function product_detail_by_brand(Request $request, $brands)
     {
         $found = Products::where('Brand', $brands)->count();
         if ($found == 0) {
             return redirect()->back()->with('error', 'Products with this brands are not available!');
         } else {
+            $ip = $request->ip();
             $carss = Products::where('Brand', $brands)->first();
             $category = category::where('id', $carss->Category)->first();
             $brand = Brand::where('Brand_category', $category->category_name)->get();
             $cars = Products::where('Brand', $brands)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
-            return view('front.index.details_brand', compact('cars', 'brand'));
+            return view('front.index.details_brand', compact('cars','carss', 'brand','ip'));
         }
     }
-    public function product_detail_by_top_10($category)
+    public function product_detail_by_top_10(Request $request, $category)
     {
+        $ip = $request->ip();
         $brand = Brand::where('Brand_category', $category)->get();
         $cars = Products::where('top_10', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
         $carss = Products::where('top_10', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
-        return view('front.index.details_brand', compact('cars','carss', 'brand'));
+        return view('front.index.details_brand', compact('cars', 'carss', 'brand','ip'));
     }
-    public function product_detail_by_upcoming($category)
+    public function product_detail_by_upcoming(Request $request, $category)
     {
+        $ip = $request->ip();
         $brand = Brand::where('Brand_category', $category)->get();
+        $carss = Products::where('Upcoming', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
         $cars = Products::where('Upcoming', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
-        return view('front.index.details_brand', compact('cars', 'brand'));
+        return view('front.index.details_brand', compact('cars','carss', 'brand','ip'));
     }
     public function DeleteFalseCeiling($id)
     {

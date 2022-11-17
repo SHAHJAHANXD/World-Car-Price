@@ -24,7 +24,9 @@ Details Page
                                     <div class="splide__track">
                                         <ul class="splide__list">
                                             @php
-                                            $images = \App\Models\Images::where('product_id', $cars->id)->get();
+                                             $images = \App\Models\Images::where('product_id', $cars->id)->get();
+                                            $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                                            $country = \App\Models\Country::where('id', $UserData->country_id)->first();
                                             @endphp
                                             @foreach ($images as $images)
                                             <li class="splide__slide">
@@ -39,7 +41,7 @@ Details Page
                                     <span class="car__year">{{ $cars->Year }}</span>
                                 </div>
                                 <div class="car__footer">
-                                    <span class="car__price">${{ $cars->Price }}</span>
+                                    <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
                                 </div>
                             </div>
                         </div>

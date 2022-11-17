@@ -37,13 +37,13 @@ World Car Price
                     <div class="splide__track">
                         <ul class="splide__list">
                             @php
+                            $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                            $country = \App\Models\Country::where('id', $UserData->country_id)->first();
                             $images = \App\Models\Images::where('product_id', $cars->id)->first();
                             @endphp
-
                             <li class="splide__slide">
                                 <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;">
                             </li>
-
                         </ul>
                     </div>
 
@@ -52,7 +52,7 @@ World Car Price
                         <span class="car__year">{{ $cars->Year }}</span>
                     </div>
                     <div class="car__footer">
-                        <span class="car__price">${{ $cars->Price }}</span>
+                        <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
                     </div>
                 </div>
             </div>
@@ -76,6 +76,8 @@ World Car Price
                     <div class="splide__track">
                         <ul class="splide__list">
                             @php
+                            $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                            $country = \App\Models\Country::where('id', $UserData->country_id)->first();
                             $images = \App\Models\Images::where('product_id', $cars->id)->first();
                             @endphp
 
@@ -90,7 +92,7 @@ World Car Price
                         <span class="car__year">{{ $cars->Year }}</span>
                     </div>
                     <div class="car__footer">
-                        <span class="car__price">${{ $cars->Price }}</span>
+                        <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
                     </div>
                 </div>
             </div>
@@ -114,6 +116,8 @@ World Car Price
                     <div class="splide__track">
                         <ul class="splide__list">
                             @php
+                             $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                            $country = \App\Models\Country::where('id', $UserData->country_id)->first();
                             $images = \App\Models\Images::where('product_id', $cars->id)->first();
                             @endphp
 
@@ -128,7 +132,7 @@ World Car Price
                         <span class="car__year">{{ $cars->Year }}</span>
                     </div>
                     <div class="car__footer">
-                        <span class="car__price">${{ $cars->Price }}</span>
+                        <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
                     </div>
                 </div>
             </div>
@@ -153,6 +157,8 @@ World Car Price
                     <div class="splide__track">
                         <ul class="splide__list">
                             @php
+                            $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                            $country = \App\Models\Country::where('id', $UserData->country_id)->first();
                             $images = \App\Models\Images::where('product_id', $cars->id)->first();
                             @endphp
 
@@ -168,7 +174,7 @@ World Car Price
                         <span class="car__year">{{ $cars->Year }}</span>
                     </div>
                     <div class="car__footer">
-                        <span class="car__price">${{ $cars->Price }}</span>
+                        <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
                     </div>
                 </div>
             </div>
@@ -192,6 +198,8 @@ World Car Price
                     <div class="splide__track">
                         <ul class="splide__list">
                             @php
+                            $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                            $country = \App\Models\Country::where('id', $UserData->country_id)->first();
                             $images = \App\Models\Images::where('product_id', $cars->id)->first();
                             @endphp
 
@@ -207,7 +215,7 @@ World Car Price
                         <span class="car__year">{{ $cars->Year }}</span>
                     </div>
                     <div class="car__footer">
-                        <span class="car__price">${{ $cars->Price }}</span>
+                        <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
                     </div>
                 </div>
             </div>

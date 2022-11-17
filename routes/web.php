@@ -3,9 +3,12 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\FalseCeilingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleProductsController;
+use App\Models\FalseCeiling;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,13 +23,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [UserController::class, 'index'])->name('home');
+
+Route::get('/change-country', [UserController::class, 'country'])->name('country');
+Route::get('/choose-country/{id}', [UserController::class, 'change_country'])->name('change_country');
+
 Route::get('/wallpapers', [UserController::class, 'wallpapers'])->name('wallpapers');
+
 Route::get('/wallpapers-detail/{id}', [UserController::class, 'wallpapers_detail'])->name('wallpapers_detail');
+
 Route::get('/get-product-of-/{category}', [UserController::class, 'productcategory'])->name('productcategory');
+
 Route::get('/product-detail/{id}', [UserController::class, 'product_detail'])->name('product_detail');
+
 Route::get('/product-detail-by-category/{category}', [UserController::class, 'product_detail_by_category'])->name('product_detail_by_category');
+
 Route::get('/product-detail-by-brand/{brands}', [UserController::class, 'product_detail_by_brand'])->name('product_detail_by_brand');
+
 Route::get('/product-detail-by-upcoming/{category}', [UserController::class, 'product_detail_by_upcoming'])->name('product_detail_by_upcoming');
+
 Route::get('/product-detail-by-top-10/{category}', [UserController::class, 'product_detail_by_top_10'])->name('product_detail_by_top_10');
 
 Route::prefix('administrator')->group(function () {
@@ -59,6 +73,16 @@ Route::prefix('administrator')->group(function () {
         Route::get('/edit-category/{id}', [CategoryController::class, 'edit_categories'])->name('admin.edit_categories');
         Route::post('/post-edit-category', [CategoryController::class, 'post_edit_categories'])->name('admin.post_edit_categories');
 
+
+        Route::get('/false-ceilings', [FalseCeilingController::class, 'false_ceiling'])->name('admin.false_ceiling');
+        Route::post('/post-false-ceilings', [FalseCeilingController::class, 'post_false_ceiling'])->name('admin.post_false_ceiling');
+        Route::delete('/delete-false-ceilings/{id}', [FalseCeilingController::class, 'deletefalse_ceiling'])->name('admin.deletefalse_ceiling');
+        Route::get('/false-ceilings-active-status/{id}', [FalseCeilingController::class, 'activefalse_ceiling'])->name('admin.activeFalseCeiling');
+        Route::get('/false-ceilings-block-status/{id}', [FalseCeilingController::class, 'blockfalse_ceiling'])->name('admin.blockfalse_ceiling');
+        Route::get('/edit-false-ceilings/{id}', [FalseCeilingController::class, 'edit_false_ceiling'])->name('admin.edit_false_ceiling');
+        Route::post('/post-edit-false-ceilings', [FalseCeilingController::class, 'post_edit_false_ceiling'])->name('admin.post_edit_false_ceiling');
+
+
         Route::get('/brands', [BrandController::class, 'Brand'])->name('admin.Brands');
         Route::post('/post-brands', [BrandController::class, 'post_brands'])->name('admin.post_brands');
         Route::delete('/delete-brands/{id}', [BrandController::class, 'deletebrands'])->name('admin.deletebrands');
@@ -83,9 +107,6 @@ Route::prefix('administrator')->group(function () {
         Route::get('/product-detail/{id}', [ProductController::class, 'product_detail'])->name('admin.product_detail');
 
         Route::get('/countries', [CountryController::class, 'countries'])->name('admin.countries');
-        Route::post('/post-countries', [CountryController::class, 'post_countries'])->name('admin.post_countries');
-        Route::delete('/delete-countries/{id}', [CountryController::class, 'deletecountries'])->name('admin.deletecountries');
-
 
         Route::get('/edit-countries/{id}', [CountryController::class, 'edit_countries'])->name('admin.edit_categories');
         Route::post('/post-edit-countries', [CountryController::class, 'post_edit_countries'])->name('admin.post_edit_countries');
