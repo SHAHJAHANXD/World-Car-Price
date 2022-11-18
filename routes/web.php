@@ -61,6 +61,7 @@ Route::prefix('administrator')->group(function () {
         Route::get('/users-block-status/{id}', [UserController::class, 'blockuser'])->name('admin.blockuser');
 
         Route::get('/False-Ceiling', [UserController::class, 'FalseCeiling'])->name('admin.FalseCeiling');
+        Route::get('/False-Ceiling-by-category/{category}', [UserController::class, 'FalseCeilingcategory'])->name('admin.FalseCeilingcategory');
         Route::post('/Post-False-Ceiling', [UserController::class, 'PostFalseCeiling'])->name('admin.PostFalseCeiling');
 
         Route::delete('/delete-Ceiling/{id}', [UserController::class, 'DeleteFalseCeiling'])->name('admin.DeleteFalseCeiling');

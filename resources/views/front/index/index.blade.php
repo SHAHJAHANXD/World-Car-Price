@@ -32,8 +32,6 @@ World Car Price
             @forelse ($cars as $cars)
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="car">
-
-
                     <div class="splide__track">
                         <ul class="splide__list">
                             @php
@@ -46,7 +44,6 @@ World Car Price
                             </li>
                         </ul>
                     </div>
-
                     <div class="car__title">
                         <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
                         <span class="car__year">{{ $cars->Year }}</span>

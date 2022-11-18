@@ -28,26 +28,16 @@ class FalseCeilingController extends Controller
     public function post_false_ceiling(Request $request)
     {
         $FalseCeiling = new FalseCeiling();
-        $FalseCeiling->FalseCeiling_name = $request->FalseCeiling_name;
-        if ($request->hasfile('FalseCeiling_image')) {
-            $imageName = env('APP_URL') . 'images/false_ceiling/' . time() . '.' . $request->FalseCeiling_image->extension();
-            $FalseCeiling->FalseCeiling_image = $imageName;
-            $request->FalseCeiling_image->move(public_path('images/false_ceiling'),  $imageName);
-        }
+        $FalseCeiling->title = $request->title;
         $FalseCeiling->save();
-        return redirect()->back()->with('success','FalseCeiling created successfully!');
+        return redirect()->back()->with('success','Record created successfully!');
     }
     public function post_edit_false_ceiling(Request $request)
     {
         $FalseCeiling = FalseCeiling::where('id', $request->id)->first();
-        $FalseCeiling->FalseCeiling_name = $request->FalseCeiling_name;
-        if ($request->hasfile('FalseCeiling_image')) {
-            $imageName = env('APP_URL') . 'images/false_ceiling/' . time() . '.' . $request->FalseCeiling_image->extension();
-            $FalseCeiling->FalseCeiling_image = $imageName;
-            $request->FalseCeiling_image->move(public_path('images/false_ceiling'),  $imageName);
-        }
+        $FalseCeiling->title = $request->title;
         $FalseCeiling->save();
-        return redirect()->route('admin.false_ceiling')->with('success','FalseCeiling updated successfully!');
+        return redirect()->route('admin.false_ceiling')->with('success','Record updated successfully!');
     }
 
     public function activeFalseCeiling($id)

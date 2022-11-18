@@ -44,23 +44,14 @@ Admin | All Products
             <div class="row">
                 @foreach ($Products as $product)
                 <div class="col-12 col-sm-6 col-md-6 col-xl-3 col-lg-4">
-                    @php
-                    $images = \App\Models\FalseCeilingImages::where('false_id', $product->id)->first();
-                    @endphp
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ $images->Image }}" alt="Card image cap">
                         <div class="card-body">
-                            <p class="card-text">Title: <b>{{ $product->title }}</b></p>
-                            <p class="card-text">Category: <b>False Ceiling</b></p>
-                            <form method="POST" action="{{ route('admin.DeleteFalseCeiling', $product->id) }}">
-                                @csrf
-                                <input name="_method" type="hidden" value="DELETE">
-                                <div class="row">
-                                    <div class="col-4 text-center">
-                                        <button type="submit" class="btn btn-danger show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="row" style="    justify-content: center;">
+                                <h5 class="card-title"><b>{{ $product->title }}</b></h5>
+                            </div>
+                            <div class="row" style=" margin-top: 30px;    justify-content: center;">
+                                <a href="/administrator/False-Ceiling-by-category/{{ $product->title }}" class="btn btn-primary">View Images</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -81,11 +72,12 @@ Admin | All Products
             <div class="modal-body">
                 <form action="{{ route('admin.PostFalseCeiling') }}" enctype="multipart/form-data" method="POST">
                     @csrf
-                    <label for="name">False Ceiling Title</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter False Ceiling Title">
-                    @if ($errors->has('title'))
-                    <span class="text-danger">{{ $errors->first('title') }}</span>
-                    @endif
+                    <label for="name">False Ceiling Category</label>
+                    <select class="form-control" name="category" id="">
+                        @foreach ($Productss as $Productss)
+                        <option value="{{ $Productss->title }}">{{ $Productss->title }}</option>
+                        @endforeach
+                    </select>
                     <label for="name">False Ceiling Images</label>
                     <input required type="file" class="form-control" name="Image[]" multiple>
                     @if ($errors->has('Image'))

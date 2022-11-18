@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('false_ceiling_images', function (Blueprint $table) {
             $table->id();
-            $table->string('false_id')->nullable();
+            $table->string('category')->nullable();
             $table->string('Image')->nullable();
             $table->timestamps();
         });

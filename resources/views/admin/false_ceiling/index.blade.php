@@ -31,11 +31,11 @@ Admin | All FalseCeiling
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">All FalseCeiling DataTable</h3>
-                            {{-- <div class="card-body" style="text-align: end;">
+                            <div class="card-body" style="text-align: end;">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                                     Add FalseCeiling
                                 </button>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
@@ -43,44 +43,26 @@ Admin | All FalseCeiling
                                     <tr>
                                         <th class="text-center">FalseCeiling Id</th>
                                         <th class="text-center">FalseCeiling Name</th>
-                                        <th class="text-center">FalseCeiling Status</th>
-                                        <th class="text-center">FalseCeiling Actions</th>
-                                        {{-- <th class="text-center">Action</th> --}}
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($FalseCeiling as $FalseCeiling)
                                     <tr>
                                         <td class="text-center">{{ $FalseCeiling->id }}</td>
-                                        <td class="text-center">{{ $FalseCeiling->FalseCeiling_name }}</td>
-                                        @if ($FalseCeiling->FalseCeiling_status == 1)
+                                        <td class="text-center">{{ $FalseCeiling->title }}</td>
+
+
                                         <td class="text-center">
-                                            <a class="btn btn-success">Active</a>
-                                        </td>
-                                        @else
-                                        <td class="text-center">
-                                            <a class="btn btn-danger">Blocked</a>
-                                        </td>
-                                        @endif
-                                        @if ($FalseCeiling->FalseCeiling_status == 1)
-                                        <td class="text-center">
-                                            <a href="{{ route('admin.blockFalseCeiling', $FalseCeiling->id) }}" class="btn btn-danger">Block</a>
-                                        </td>
-                                        @else
-                                        <td class="text-center">
-                                            <a href="{{ route('admin.activeFalseCeiling', $FalseCeiling->id) }}" class="btn btn-success">Active</a>
-                                        </td>
-                                        @endif
-                                        {{-- <td class="text-center">
 
                                             <form method="POST" action="{{ route('admin.deletefalse_ceiling', $FalseCeiling->id) }}">
                                                 @csrf
                                                 <input name="_method" type="hidden" value="DELETE">
-                                                <a class="btn btn-primary" onclick="return confirm('Are you sure? You want to edit this record?')" href="/administrator/edit-FalseCeiling/{{ $FalseCeiling->id }}">Edit</a>
+                                                <a class="btn btn-primary" onclick="return confirm('Are you sure? You want to edit this record?')" href="/administrator/edit-false-ceilings/{{ $FalseCeiling->id }}">Edit</a>
                                                 <button type="submit" class="btn btn-danger show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
                                             </form>
 
-                                        </td> --}}
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -104,10 +86,10 @@ Admin | All FalseCeiling
             <div class="modal-body">
                 <form action="{{ route('admin.post_false_ceiling') }}" enctype="multipart/form-data" method="POST">
                     @csrf
-                    <label for="name">FalseCeiling name</label>
-                    <input type="text" class="form-control" id="name" name="FalseCeiling_name" placeholder="Enter FalseCeiling Name">
-                    @if ($errors->has('FalseCeiling_name'))
-                    <span class="text-danger">{{ $errors->first('FalseCeiling_name') }}</span>
+                    <label for="title">FalseCeiling Title</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter FalseCeiling Title">
+                    @if ($errors->has('title'))
+                    <span class="text-danger">{{ $errors->first('title') }}</span>
                     @endif
                     <div class="div" style="margin-top: 20px; ">
                         <button type="submit" class="btn btn-primary form-control">Save</button>
