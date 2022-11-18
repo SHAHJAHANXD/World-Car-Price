@@ -40,13 +40,13 @@ World Car Price
                             $images = \App\Models\Images::where('product_id', $cars->id)->first();
                             @endphp
                             <li class="splide__slide">
-                                <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;">
+                               <a href="/product-detail/{{ $cars->id }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;"></a>
                             </li>
                         </ul>
                     </div>
                     <div class="car__title">
                         <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
-                        <span class="car__year">{{ $cars->Year }}</span>
+                        <span class="car__year"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Year }}</a></span>
                     </div>
                     <div class="car__footer">
                         <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
@@ -79,14 +79,14 @@ World Car Price
                             @endphp
 
                             <li class="splide__slide">
-                                <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;">
+                                  <a href="/product-detail/{{ $cars->id }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;"></a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="car__title">
-                        <h3 class="car__name"><a href="car.html">{{ $cars->Title }}</a></h3>
-                        <span class="car__year">{{ $cars->Year }}</span>
+                        <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
+                        <span class="car__year"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Year }}</a></span>
                     </div>
                     <div class="car__footer">
                         <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
@@ -119,14 +119,14 @@ World Car Price
                             @endphp
 
                             <li class="splide__slide">
-                                <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;">
+                                  <a href="/product-detail/{{ $cars->id }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;"></a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="car__title">
-                        <h3 class="car__name"><a href="car.html">{{ $cars->Title }}</a></h3>
-                        <span class="car__year">{{ $cars->Year }}</span>
+                        <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
+                        <span class="car__year"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Year }}</a></span>
                     </div>
                     <div class="car__footer">
                         <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
@@ -160,15 +160,15 @@ World Car Price
                             @endphp
 
                             <li class="splide__slide">
-                                <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;">
+                                  <a href="/product-detail/{{ $cars->id }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;"></a>
                             </li>
 
                         </ul>
                     </div>
 
                     <div class="car__title">
-                        <h3 class="car__name"><a href="car.html">{{ $cars->Title }}</a></h3>
-                        <span class="car__year">{{ $cars->Year }}</span>
+                        <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
+                        <span class="car__year"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Year }}</a></span>
                     </div>
                     <div class="car__footer">
                         <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>
@@ -201,15 +201,15 @@ World Car Price
                             @endphp
 
                             <li class="splide__slide">
-                                <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;">
+                                  <a href="/product-detail/{{ $cars->id }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; border-radius: 20px; margin-bottom: 10px;"></a>
                             </li>
 
                         </ul>
                     </div>
 
                     <div class="car__title">
-                        <h3 class="car__name"><a href="car.html">{{ $cars->Title }}</a></h3>
-                        <span class="car__year">{{ $cars->Year }}</span>
+                        <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
+                        <span class="car__year"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Year }}</a></span>
                     </div>
                     <div class="car__footer">
                         <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>

@@ -84,6 +84,7 @@ class ProductController extends Controller
         $product->Category_name = $category->category_name;
         $product->Brand = $request->Brand;
         $product->top_10 = $request->top_10;
+        $product->Upcoming = $request->Upcoming;
         $product->Tags = $request->Tags;
         $product->Product_status = $request->Product_status;
         $product->Title = $request->Title;

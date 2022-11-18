@@ -145,19 +145,19 @@ class UserController extends Controller
             $UserData->save();
         }
         $category_car = category::where('category_name', 'Car')->first();
-        $cars = Products::where('Category', $category_car->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
+        $cars = Products::where('Category', $category_car->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
 
         $category_e_cars = category::where('category_name', 'E Car')->first();
-        $e_cars = Products::where('Category', $category_e_cars->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
+        $e_cars = Products::where('Category', $category_e_cars->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
 
         $category_bikes = category::where('category_name', 'Bikes')->first();
-        $bikes = Products::where('Category', $category_bikes->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
+        $bikes = Products::where('Category', $category_bikes->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
 
         $category_e_bikes = category::where('category_name', 'E Bikes')->first();
-        $e_bikes = Products::where('Category', $category_e_bikes->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
+        $e_bikes = Products::where('Category', $category_e_bikes->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
 
         $category_bicycle = category::where('category_name', 'BiCycles')->first();
-        $bicycle = Products::where('Category', $category_bicycle->id)->where('status', 1)->orderBy('id', 'desc')->take(3)->get();
+        $bicycle = Products::where('Category', $category_bicycle->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
 
 
         $Traffic = Traffic::where('id', 1)->count();

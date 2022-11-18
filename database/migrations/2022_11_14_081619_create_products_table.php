@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('Year')->nullable();
             $table->string('Thumbnail_Image')->nullable();
             $table->string('Image_alt')->nullable();
-            $table->string('Short_Description')->nullable();
+            $table->longText('Short_Description')->nullable();
             $table->longText('Description')->nullable();
             $table->string('Price')->nullable();
             $table->string('Country')->nullable();

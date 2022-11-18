@@ -74,6 +74,14 @@ Admin | All Products
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label>Upcoming</label>
+                                    <select required name="Upcoming" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label>Top 10</label>
                                     <select required name="top_10" class="form-control">
                                         <option value="" selected>Choose option</option>

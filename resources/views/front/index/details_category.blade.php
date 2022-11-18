@@ -64,8 +64,8 @@ Details Page
                             <span class="offer__title" style="color: red">BROWSE BY BRANDS</span>
                             <div class="row">
                                 @foreach ($brand as $brand)
-                                <div class="col-6">
-                                    <a href="/product-detail-by-brand/{{ $brand->Brand_name }}" style="color: black  ;   padding: 20px 20px 20px 20px;">
+                                <div class="col-6" style="margin-top: 10px; text-align: center;margin-bottom: 10px;">
+                                    <a href="/product-detail-by-brand/{{ $brand->Brand_name }}" style="color: black;">
                                         <b>{{ $brand->Brand_name }}</b>
                                     </a>
                                 </div>
