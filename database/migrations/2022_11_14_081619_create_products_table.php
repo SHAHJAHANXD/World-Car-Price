@@ -20,8 +20,12 @@ return new class extends Migration
             $table->string('user_email')->nullable();
             $table->string('status')->default(0);
             $table->string('Body_type')->nullable();
+            $table->string('Millage')->nullable();
+            $table->string('Features')->nullable();
+            $table->string('Top_speed')->nullable();
             $table->string('Transmission_type')->nullable();
             $table->string('Drive_type')->nullable();
+            $table->string('Upcoming')->nullable();
             $table->string('Fuel_type')->nullable();
             $table->string('Capacities')->nullable();
             $table->string('Doors')->nullable();
@@ -35,7 +39,7 @@ return new class extends Migration
             $table->string('Year')->nullable();
             $table->string('Thumbnail_Image')->nullable();
             $table->string('Image_alt')->nullable();
-            $table->longText('Short_Description')->nullable();
+            $table->string('Short_Description')->nullable();
             $table->longText('Description')->nullable();
             $table->string('Price')->nullable();
             $table->string('Country')->nullable();

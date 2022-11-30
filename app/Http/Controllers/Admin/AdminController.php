@@ -14,30 +14,24 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $products = Products::count();
-        $users = User::take(8)->get();
-        $traffic = Traffic::first();
-        return view('admin.dashboard.index', compact('users','traffic','products'));
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
+            $products = Products::count();
+            $users = User::take(10)->orderBy('id', 'DESC')->where('id', '!=', auth()->id())->get();
+            $traffic = Traffic::first();
+            return view('admin.dashboard.index', compact('users', 'traffic', 'products'));
+        } else {
+            return redirect('/administrator/products-1');
+        }
     }
     public function login()
     {
 
         return view('admin.auth.login');
     }
-    public function allSalons()
-    {
-        $salon = User::where('role', 'Salon')->get();
-        return view('admin.salons.table', compact('salon'));
-    }
     public function allUsers()
     {
-        $users = User::where('role', 'User')->get();
+        $users = User::where('role', 'User')->orderby('id', 'DESC')->get();
         return view('admin.users.table', compact('users'));
-    }
-    public function allStaff()
-    {
-        $users = User::where('role', 'Staff')->get();
-        return view('admin.Staff.table', compact('users'));
     }
     public function authenticate(Request $request)
     {
@@ -72,6 +66,14 @@ class AdminController extends Controller
                 return redirect()->back()->with('error', 'Email or password is invalid!');
             }
         } elseif ($data->role == 'Staff') {
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->back()->with('error', 'Email or password is invalid!');
+            }
+        }
+        elseif ($data->role == 'Manager') {
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
                 return redirect()->route('admin.dashboard');

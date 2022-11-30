@@ -8,12 +8,9 @@ Admin | All Products
 <link rel="stylesheet" href="{{ asset('admin') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="{{ asset('admin') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="{{ asset('admin') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-    })
+<link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
+<script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
-</script>
 @endsection
 @section('content')
 <style>
@@ -40,271 +37,273 @@ Admin | All Products
     </section>
     <section class="content">
         <div class="container-fluid">
-            <div class="row" style="    justify-content: center;">
+            <div class="row" style="justify-content: center;">
                 <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Add New Product</h3>
                         </div>
-                        <form action="{{ route('admin.post_products') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.post_edit_products1') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input required type="text" hidden name="Posted_By" value="{{ Auth::user()->id }}">
+                            <input  type="text" hidden name="id" value="{{ $id }}">
                             <div class="card-body">
-                                <h2>Product Name</h2>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select  name="Category" class="form-control">
+                                        <option selected value="{{ $category->id }}">
+                                            {{ $category->category_name }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Choose Brand</label>
+                                    <select  name="Brand" class="form-control">
+                                        <option value="{{ $Products->Brand }}" selected>{{ $Products->Brand }}</option>
+                                        @foreach ($Brand as $Brand)
+                                        <option value="{{ $Brand->Brand_name }}">{{ $Brand->Brand_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Product Status</label>
+                                    <select  name="Product_status" class="form-control">
+                                        <option value="{{ $Products->Product_status }}" selected>{{ $Products->Product_status }}</option>
+                                        <option value="">Choose Product Status</option>
+                                        <option value="Coming">Coming</option>
+                                        <option value="New Released">New Released</option>
+                                        <option value="Price Update">Price Update</option>
+                                        <option value="Discontinued">Discontinued</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Upcoming</label>
+                                    <select  name="Upcoming" class="form-control">
+                                        <option value="{{ $Products->Upcoming }}" selected>{{ $Products->Upcoming }}</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Top 10</label>
+                                    <select  name="top_10" class="form-control">
+                                         <option value="{{ $Products->top_10 }}" selected>{{ $Products->top_10 }}</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label>Product Name</label>
-                                    <input required type="text" class="form-control" name="ProductName" placeholder="Enter Product Name">
-
+                                    <input  type="text" value="{{ $Products->Title }}" class="form-control" name="Title" placeholder="Enter Product Name">
                                 </div>
-                                <h2>OverView</h2>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">OverView</label>
-                                    <textarea required type="email" class="form-control" name="OverView" placeholder="Enter email">
-                                    </textarea>
+                                    <label>Year</label>
+                                    <input  type="number" value="{{ $Products->Year }}" class="form-control" name="Year" placeholder="Enter Year">
                                 </div>
-                                <h2>Product Category</h2>
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label>Choose Category</label>
-                                        <select required name="category" class="form-control">
-                                            @foreach ($category as $category)
-                                            <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Images</label>
+                                        <input  type="file"  class="form-control" name="Multiple_images[]" multiple>
                                     </div>
                                 </div>
-                                <h2>Product Images</h2>
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label>File input</label>
-                                        <input required  type="file" class="form-control" name="file_images[]" multiple>
-                                    </div>
-                                </div>
-                                <h2>Basic Info</h2>
-                                <div class="form-group">
-                                    <label>Brand</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Brand Name" name="Brand">
-                                </div>
-                                <div class="form-group">
-                                    <label>Model Number</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Model Number" name="ModelNumber">
-                                </div>
-                                <div class="form-group">
-                                    <label>Made In</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Made In" name="MadeIn">
-                                </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select required name="Status" id="" class="form-control">
-                                        <option value="Available">Available</option>
-                                        <option value="Sold Out">Sold Out</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Release Year</label>
-                                    <select required required name="ReleaseDate" id="" class="form-control">
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                        <option value="2027">2027</option>
-                                        <option value="2028">2028</option>
-                                        <option value="2029">2029</option>
-                                        <option value="2030">2030</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Warranty</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Warranty" name="Warranty">
-                                </div>
-                                <div class="form-group">
-                                    <label>Colors</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Colors" name="Colors">
-                                </div>
+                                @if ($category->category_name == "Car" || $category->category_name == "E Car")
                                 <div class="form-group">
                                     <label>Body Type</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Body Type" name="BodyType">
+                                    <select  name="Body_type" class="form-control">
+                                        <option value="{{ $Products->Body_type }}" selected>{{ $Products->Body_type }}</option>
+                                        <option value="Coupe">Coupe</option>
+                                        <option value="Sedan">Sedan</option>
+                                        <option value="SUV">SUV</option>
+                                        <option value="Hatchback">Hatchback</option>
+                                        <option value="Convertible">Convertible</option>
+                                        <option value="Mini">Mini</option>
+                                        <option value="Truck">Truck</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Wagon">Wagon</option>
+                                    </select>
                                 </div>
-                                <h2>Engine</h2>
+
+                                @if ($category->category_name == "Car")
                                 <div class="form-group">
-                                    <label>Engine Type</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Engine Type" name="EngineType">
+                                    <label>Transmission Type</label>
+                                    <select  name="Transmission_type" class="form-control">
+                                         <option value="{{ $Products->Transmission_type }}" selected>{{ $Products->Transmission_type }}</option>
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="CVT">CVT</option>
+                                    </select>
                                 </div>
+                                @endif
+                                @if ($category->category_name == "E Car")
                                 <div class="form-group">
-                                    <label>Displacement</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Displacement" name="Displacement">
+                                    <label>Transmission Type</label>
+                                    <select  name="Transmission_type" class="form-control">
+                                         <option value="{{ $Products->Transmission_type }}" selected>{{ $Products->Transmission_type }}</option>
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="Single-Speed">Single-Speed</option>
+                                        <option value="Dual-Speed">Dual-Speed</option>
+                                    </select>
                                 </div>
+                                @endif
                                 <div class="form-group">
-                                    <label>Cooling System</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Cooling System" name="CoolingSystem">
-                                </div>
-                                <div class="form-group">
-                                    <label>Engine Power</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Engine Power" name="EnginePower">
-                                </div>
-                                <div class="form-group">
-                                    <label>Torque</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Torque" name="Torque">
-                                </div>
-                                <div class="form-group">
-                                    <label>Starter</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Starter" name="Starter">
-                                </div>
-                                <div class="form-group">
-                                    <label>Bore x Stroke</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Bore x Stroke" name="BoreStroke">
-                                </div>
-                                <div class="form-group">
-                                    <label>Compression Ratio</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Compression Ratio" name="CompressionRatio">
-                                </div>
-                                <div class="form-group">
-                                    <label>No. Of Cylinders</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter No. Of Cylinders" name="NoOfCylinders">
-                                </div>
-                                <h2>Performance</h2>
-                                <div class="form-group">
-                                    <label>Transmission</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Transmission" name="Transmission">
-                                </div>
-                                <div class="form-group">
-                                    <label>Clutch</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Clutch" name="Clutch">
+                                    <label>Drive Type</label>
+                                    <select  name="Drive_type" class="form-control">
+                                         <option value="{{ $Products->Drive_type }}" selected>{{ $Products->Drive_type }}</option>
+                                        <option value="All-Wheel-Drive">All Wheel Drive</option>
+                                        <option value="Rear-Wheel-Drive">Rear Wheel Drive</option>
+                                        <option value="Front-Wheel-Drive">Front Wheel Drive</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Final Drive</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Final Drive" name="FinalDrive">
+                                    <label>Fule Type</label>
+                                    <select  name="Fuel_type" class="form-control">
+                                         <option value="{{ $Products->Fuel_type }}" selected>{{ $Products->Fuel_type }}</option>
+                                        <option value="Premium">Premium</option>
+                                        <option value="Gasoline">Gasoline</option>
+                                        <option value="Hybrid">Hybrid</option>
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="CNG">CNG</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Gear Box</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Gear Box" name="GearBox">
+                                    <label>Capacities</label>
+                                    <select  name="Capacities" class="form-control">
+                                         <option value="{{ $Products->Capacities }}" selected>{{ $Products->Capacities }}</option>
+                                        <option value="2-Seats">2 Seats</option>
+                                        <option value="4-Seats">4 Seats</option>
+                                        <option value="5-Seats">5 Seats</option>
+                                        <option value="6-Seats">6 Seats</option>
+                                        <option value="7-Seats">7 Seats</option>
+                                        <option value="8-Seats">8 Seats</option>
+                                    </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>Number Of Doors</label>
+                                    <select  name="Doors" class="form-control">
+                                         <option value="{{ $Products->Doors }}" selected>{{ $Products->Doors }}</option>
+                                        <option value="2 Doors">2 Doors</option>
+                                        <option value="4-Doors">4 Doors</option>
+                                        <option value="5-Doors">5 Doors</option>
+                                    </select>
+                                </div>
+                                @endif
+
+                                @if ($category->category_name == "Bikes" || $category->category_name == "E Bikes")
+                                <div class="form-group">
+                                    <label>Body Type</label>
+                                    <select  name="Body_type" class="form-control">
+                                         <option value="{{ $Products->Body_type }}" selected>{{ $Products->Body_type }}</option>
+                                        <option value="Heavy">Heavy</option>
+                                        <option value="Commuter">Commuter</option>
+                                        <option value="Cruiser">Cruiser</option>
+                                        <option value="Naked">Naked</option>
+                                        <option value="Scooter">Scooter</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="Adventure Tourer">Adventure Tourer</option>
+                                        <option value="Moped">Moped</option>
+                                        <option value="ATV">ATV</option>
+                                        <option value="Cafe Racer">Cafe Racer</option>
+                                        <option value="Off-Road">Off-Road</option>
+                                    </select>
+                                </div>
+                                @if ($category->category_name == "Bikes")
+                                <div class="form-group">
+                                    <label>Engine Displacement</label>
+                                    <select  name="Millage" class="form-control">
+                                         <option value="{{ $Products->Millage }}" selected>{{ $Products->Millage }}</option>
+                                        <option value="Upto 100cc">Upto 100cc</option>
+                                        <option value="101cc to 125cc">101cc to 125cc</option>
+                                        <option value="126cc to 150cc">126cc to 150cc</option>
+                                        <option value="151cc to 200cc">151cc to 200cc</option>
+                                        <option value="201cc to 250cc">201cc to 250cc</option>
+                                        <option value="251cc to 500cc">251cc to 500cc</option>
+                                        <option value="501cc to 1000cc">501cc to 1000cc</option>
+                                        <option value="Above 1000cc">Above 1000cc</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Millage</label>
+                                    <select  name="Millage" class="form-control">
+                                         <option value="{{ $Products->Millage }}" selected>{{ $Products->Millage }}</option>
+                                        <option value="Upto 30 kmpl">Upto 30 kmpl</option>
+                                        <option value="31 to 50 kmpl">31 to 50 kmpl</option>
+                                        <option value="Above 50 kmpl">Above 50 kmpl</option>
+                                    </select>
+                                </div>
+                                @endif
+                                @if ($category->category_name == "E Bikes")
+                                <div class="form-group">
+                                    <label>Millage Per Charge</label>
+                                    <select  name="Millage" class="form-control">
+                                         <option value="{{ $Products->Millage }}" selected>{{ $Products->Millage }}</option>
+                                        <option value="Upto 50 Km">Upto 50 Km</option>
+                                        <option value="Upto 100 Km">Upto 100 Km</option>
+                                        <option value="Upto 150 Km">Upto 150 Km</option>
+                                        <option value="Upto 200 km">Upto 200 km</option>
+                                        <option value="Above 200 km">Above 200 km</option>
+                                    </select>
+                                </div>
+                                @endif
+                                @if ($category->category_name == "Bikes")
+                                <div class="form-group">
+                                    <label>Transmission Type</label>
+                                    <select  name="Transmission_type" class="form-control">
+                                         <option value="{{ $Products->Transmission_type }}" selected>{{ $Products->Transmission_type }}</option>
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="CVT">CVT</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="4 Speed">4 Speed</option>
+                                        <option value="5 Speed">5 Speed</option>
+                                        <option value="6 Speed">6 Speed</option>
+                                        <option value="Mesh">Mesh</option>
+                                    </select>
+                                </div>
+                                @endif
+                                @if ($category->category_name == "E Bikes")
                                 <div class="form-group">
                                     <label>Top Speed</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Top Speed" name="TopSpeed">
+                                    <select  name="Top_speed" class="form-control">
+                                         <option value="{{ $Products->Top_speed }}" selected>{{ $Products->Top_speed }}</option>
+                                        <option value="Upto 60 km">Upto 60 km</option>
+                                        <option value="Upto 120 km">Upto 120 km</option>
+                                        <option value="Upto 180 km">Upto 180 km</option>
+                                        <option value="Upto 240 km">Upto 240 km</option>
+                                        <option value="Above 240 km">Above 240 km</option>
+                                    </select>
                                 </div>
-                                <h2>Suspensions</h2>
+                                @endif
+
+                                @endif
                                 <div class="form-group">
-                                    <label>Front Suspension</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Front Suspension" name="FrontSuspension">
-                                </div>
-                                <div class="form-group">
-                                    <label>Rear Suspension</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Rear Suspension" name="RearSuspension">
-                                </div>
-                                <h2>
-                                    Dimensions And Weight
-                                </h2>
-                                <div class="form-group">
-                                    <label>Length</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Length" name="Length">
-                                </div>
-                                <div class="form-group">
-                                    <label>Width</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Width" name="Width">
-                                </div>
-                                <div class="form-group">
-                                    <label>Height</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Height" name="Height">
-                                </div>
-                                <div class="form-group">
-                                    <label>Wheelbase</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Wheelbase" name="Wheelbase">
-                                </div>
-                                <div class="form-group">
-                                    <label>Seat Height</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Seat Height" name="SeatHeight">
-                                </div>
-                                <div class="form-group">
-                                    <label>Ground Clearance</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Ground Clearance" name="GroundClearance">
-                                </div>
-                                <div class="form-group">
-                                    <label>Kurb Weight</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter KurbWeight" name="KurbWeight">
-                                </div>
-                                <div class="form-group">
-                                    <label>Weight</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Weight" name="Weight">
-                                </div>
-                                <h2>Tires</h2>
-                                <div class="form-group">
-                                    <label>Tyre Front</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Tyre Front" name="TyreFront">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tyre Rear</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Tyre Rear" name="TyreRear">
-                                </div>
-                                <div class="form-group">
-                                    <label>Front Wheel</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Front Wheel" name="FrontWheel">
-                                </div>
-                                <div class="form-group">
-                                    <label>Rear Wheel</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Rear Wheel" name="RearWheel">
-                                </div>
-                                <h2>Brake System</h2>
-                                <div class="form-group">
-                                    <label>Front Brake</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Front Brake" name="FrontBrake">
-                                </div>
-                                <div class="form-group">
-                                    <label>Rear Brake</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Rear Brake" name="RearBrake">
-                                </div>
-                                <div class="form-group">
-                                    <label>ABS System</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter ABS System" name="ABSSystem">
-                                </div>
-                                <h2>Fuel</h2>
-                                <div class="form-group">
-                                    <label>Mileage </label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Mileage" name="Mileage">
-                                </div>
-                                <div class="form-group">
-                                    <label>Fuel Type</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Fuel Type" name="FuelType">
-                                </div>
-                                <h2>Capacities</h2>
-                                <div class="form-group">
-                                    <label>Seating Capacity</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Seating Capacity" name="SeatingCapacity">
-                                </div>
-                                <div class="form-group">
-                                    <label>Fuel Tank Capacity</label>
-                                    <input required  type="text" class="form-control" placeholder="Enter Fuel Tank Capacity" name="FuelTankCapacity">
-                                </div>
-                                <h2>
-                                    Features
-                                </h2>
-                                <div class="form-group">
-                                    <label>Features</label>
-                                    <textarea  required type="text" class="form-control" placeholder="Enter Features" name="Features">
+                                    <label for="">Short Description</label>
+                                    <textarea  class="form-control" name="Short_Description">
+                                        {{ $Products->Short_Description }}
                                     </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Long Description</label>
+                                    <textarea class="summernote" name="Description">
+                                        {!! $Products->Description !!}
+                                    </textarea>
+                                    @if ($errors->has('Description'))
+                                    <span class="text-danger">{{ $errors->first('Description') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Product Price</label>
+                                    <input  type="number"  value="{{ $Products->Price }}" class="form-control" name="Price" placeholder="Enter Product Price">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select   name="Country" id="" class="form-control">
+                                        <option value="{{ $Products->Country }}" selected>{{ $Products->Country }}</option>
+                                        @foreach ($country as $country)
+                                        <option value="{{ $country->name }}">{{ $country->name  }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -368,4 +367,79 @@ Admin | All Products
     });
 
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
+
+</script>
+<script>
+    $(function() {
+        // Summernote
+        $('.summernote').summernote()
+    })
+    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+        mode: "htmlmixed"
+        , theme: "monokai"
+    });
+
+</script>
+<script nonce="65b5ca72-50ae-4070-a57b-1da554d78615">
+    (function(w, d) {
+        ! function(Z, _, ba, bb) {
+            Z.zarazData = Z.zarazData || {};
+            Z.zarazData.executed = [];
+            Z.zaraz = {
+                deferred: []
+                , listeners: []
+            };
+            Z.zaraz.q = [];
+            Z.zaraz._f = function(bc) {
+                return function() {
+                    var bd = Array.prototype.slice.call(arguments);
+                    Z.zaraz.q.push({
+                        m: bc
+                        , a: bd
+                    })
+                }
+            };
+            for (const be of ["track", "set", "debug"]) Z.zaraz[be] = Z.zaraz._f(be);
+            Z.zaraz.init = () => {
+                var bf = _.getElementsByTagName(bb)[0]
+                    , bg = _.createElement(bb)
+                    , bh = _.getElementsByTagName("title")[0];
+                bh && (Z.zarazData.t = _.getElementsByTagName("title")[0].text);
+                Z.zarazData.x = Math.random();
+                Z.zarazData.w = Z.screen.width;
+                Z.zarazData.h = Z.screen.height;
+                Z.zarazData.j = Z.innerHeight;
+                Z.zarazData.e = Z.innerWidth;
+                Z.zarazData.l = Z.location.href;
+                Z.zarazData.r = _.referrer;
+                Z.zarazData.k = Z.screen.colorDepth;
+                Z.zarazData.n = _.characterSet;
+                Z.zarazData.o = (new Date).getTimezoneOffset();
+                Z.zarazData.q = [];
+                for (; Z.zaraz.q.length;) {
+                    const bl = Z.zaraz.q.shift();
+                    Z.zarazData.q.push(bl)
+                }
+                bg.defer = !0;
+                for (const bm of [localStorage, sessionStorage]) Object.keys(bm || {}).filter((bo => bo.startsWith("_zaraz_"))).forEach((bn => {
+                    try {
+                        Z.zarazData["z_" + bn.slice(7)] = JSON.parse(bm.getItem(bn))
+                    } catch {
+                        Z.zarazData["z_" + bn.slice(7)] = bm.getItem(bn)
+                    }
+                }));
+                bg.referrerPolicy = "origin";
+                bg.src = "../../cdn-cgi/zaraz/sd0d9.js?z=" + btoa(encodeURIComponent(JSON.stringify(Z.zarazData)));
+                bf.parentNode.insertBefore(bg, bf)
+            };
+            ["complete", "interactive"].includes(_.readyState) ? zaraz.init() : Z.addEventListener("DOMContentLoaded", zaraz.init)
+        }(w, d, 0, "script");
+    })(window, document);
+
+</script>
+</head>
 @endsection

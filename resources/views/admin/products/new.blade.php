@@ -95,7 +95,7 @@ Admin | All Products
                                 </div>
                                 <div class="form-group">
                                     <label>Year</label>
-                                    <input required type="text" class="form-control" name="Year" placeholder="Enter Year">
+                                    <input required type="number" class="form-control" name="Year" placeholder="Enter Year">
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group">
@@ -103,6 +103,7 @@ Admin | All Products
                                         <input required type="file" class="form-control" name="Multiple_images[]" multiple>
                                     </div>
                                 </div>
+                                @if ($category->category_name == "Car" || $category->category_name == "E Car")
                                 <div class="form-group">
                                     <label>Body Type</label>
                                     <select required name="Body_type" class="form-control">
@@ -118,6 +119,8 @@ Admin | All Products
                                         <option value="Wagon">Wagon</option>
                                     </select>
                                 </div>
+
+                                @if ($category->category_name == "Car")
                                 <div class="form-group">
                                     <label>Transmission Type</label>
                                     <select required name="Transmission_type" class="form-control">
@@ -128,6 +131,18 @@ Admin | All Products
                                         <option value="CVT">CVT</option>
                                     </select>
                                 </div>
+                                @endif
+                                @if ($category->category_name == "E Car")
+                                <div class="form-group">
+                                    <label>Transmission Type</label>
+                                    <select required name="Transmission_type" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="Single-Speed">Single-Speed</option>
+                                        <option value="Dual-Speed">Dual-Speed</option>
+                                    </select>
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label>Drive Type</label>
                                     <select required name="Drive_type" class="form-control">
@@ -171,6 +186,95 @@ Admin | All Products
                                         <option value="5-Doors">5 Doors</option>
                                     </select>
                                 </div>
+                                @endif
+
+                                @if ($category->category_name == "Bikes" || $category->category_name == "E Bikes")
+                                <div class="form-group">
+                                    <label>Body Type</label>
+                                    <select required name="Body_type" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Heavy">Heavy</option>
+                                        <option value="Commuter">Commuter</option>
+                                        <option value="Cruiser">Cruiser</option>
+                                        <option value="Naked">Naked</option>
+                                        <option value="Scooter">Scooter</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="Adventure Tourer">Adventure Tourer</option>
+                                        <option value="Moped">Moped</option>
+                                        <option value="ATV">ATV</option>
+                                        <option value="Cafe Racer">Cafe Racer</option>
+                                        <option value="Off-Road">Off-Road</option>
+                                    </select>
+                                </div>
+                                @if ($category->category_name == "Bikes")
+                                <div class="form-group">
+                                    <label>Engine Displacement</label>
+                                    <select required name="Millage" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Upto 100cc">Upto 100cc</option>
+                                        <option value="101cc to 125cc">101cc to 125cc</option>
+                                        <option value="126cc to 150cc">126cc to 150cc</option>
+                                        <option value="151cc to 200cc">151cc to 200cc</option>
+                                        <option value="201cc to 250cc">201cc to 250cc</option>
+                                        <option value="251cc to 500cc">251cc to 500cc</option>
+                                        <option value="501cc to 1000cc">501cc to 1000cc</option>
+                                        <option value="Above 1000cc">Above 1000cc</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Millage</label>
+                                    <select required name="Millage" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Upto 30 kmpl">Upto 30 kmpl</option>
+                                        <option value="31 to 50 kmpl">31 to 50 kmpl</option>
+                                        <option value="Above 50 kmpl">Above 50 kmpl</option>
+                                    </select>
+                                </div>
+                                @endif
+                                @if ($category->category_name == "E Bikes")
+                                <div class="form-group">
+                                    <label>Millage Per Charge</label>
+                                    <select required name="Millage" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Upto 50 Km">Upto 50 Km</option>
+                                        <option value="Upto 100 Km">Upto 100 Km</option>
+                                        <option value="Upto 150 Km">Upto 150 Km</option>
+                                        <option value="Upto 200 km">Upto 200 km</option>
+                                        <option value="Above 200 km">Above 200 km</option>
+                                    </select>
+                                </div>
+                                @endif
+                                @if ($category->category_name == "Bikes")
+                                <div class="form-group">
+                                    <label>Transmission Type</label>
+                                    <select required name="Transmission_type" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="CVT">CVT</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="4 Speed">4 Speed</option>
+                                        <option value="5 Speed">5 Speed</option>
+                                        <option value="6 Speed">6 Speed</option>
+                                        <option value="Mesh">Mesh</option>
+                                    </select>
+                                </div>
+                                @endif
+                                @if ($category->category_name == "E Bikes")
+                                <div class="form-group">
+                                    <label>Top Speed</label>
+                                    <select required name="Top_speed" class="form-control">
+                                        <option value="" selected>Choose option</option>
+                                        <option value="Upto 60 km">Upto 60 km</option>
+                                        <option value="Upto 120 km">Upto 120 km</option>
+                                        <option value="Upto 180 km">Upto 180 km</option>
+                                        <option value="Upto 240 km">Upto 240 km</option>
+                                        <option value="Above 240 km">Above 240 km</option>
+                                    </select>
+                                </div>
+                                @endif
+
+                                @endif
                                 <div class="form-group">
                                     <label for="">Short Description</label>
                                     <textarea required class="form-control" name="Short_Description">
@@ -185,7 +289,7 @@ Admin | All Products
                                 </div>
                                 <div class="form-group">
                                     <label>Product Price</label>
-                                    <input required type="text" class="form-control" name="Price" placeholder="Enter Product Price">
+                                    <input required type="number" class="form-control" name="Price" placeholder="Enter Product Price">
                                 </div>
 
                                 <div class="form-group">

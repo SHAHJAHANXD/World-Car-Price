@@ -10,7 +10,7 @@ class FalseCeilingController extends Controller
 {
     public function false_ceiling()
     {
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
             $FalseCeiling = FalseCeiling::get();
             return view('admin.false_ceiling.index', compact('FalseCeiling'));
         } else {

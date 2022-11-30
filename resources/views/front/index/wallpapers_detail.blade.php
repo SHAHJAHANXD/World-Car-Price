@@ -23,10 +23,6 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="car__title">
-                        <h3 class="car__name"><a href="/wallpapers-detail/{{ $FalseCeilingImages->id }}">{{ $FalseCeilingImages->title }}</a></h3>
-
-                    </div>
                 </div>
             </div>
             @empty

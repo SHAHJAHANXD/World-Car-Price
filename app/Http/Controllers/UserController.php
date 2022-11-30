@@ -13,16 +13,45 @@ use App\Models\vehicle_products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use AmrShawky\LaravelCurrency\Facade\Currency;
 use App\Models\Country;
 use App\Models\UserData;
+use Illuminate\Support\Facades\Artisan;
 
 class UserController extends Controller
 {
+    public function updateprofile(Request $request)
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+        if ($request->name == true) {
+            $user->name = $request->name;
+        }
+        if ($request->profile_image == true) {
+            if ($request->hasfile('profile_image')) {
+                $imageName = env('APP_URL') . 'images/users/' . time() . '.' . $request->profile_image->extension();
+                $user->profile_image = $imageName;
+                $request->profile_image->move(public_path('images/users'),  $imageName);
+            }
+        }
+        if ($request->password == true) {
+            $check = Hash::check($request->old_password, $request->password);
+            if ($check == true) {
+                $user->password = Hash::make($request->password);
+            } else {
+                return redirect()->back()->with('error', 'Old Password is Invalid');
+            }
+        }
+        $user->save();
+        return redirect()->back()->with('success', 'Profile Updated Successfully');
+    }
+    public function clearcache()
+    {
+        Artisan::call('cache:clear');
+        return redirect()->route('admin.dashboard')->with('success', 'Cache Cleared Successfully!');
+    }
     public function country(Request $request)
     {
         $ip = $request->ip();
-        $country = Country::get();
+        $country = Country::where('status', 1)->get();
         return view('front.index.country', compact('country', 'ip'));
     }
     public function FalseCeiling()
@@ -37,7 +66,7 @@ class UserController extends Controller
     }
     public function FalseCeilingcategory($category)
     {
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->role == 'Admin' ) {
             $Products = FalseCeilingImages::where('category', $category)->get();
 
             return view('admin.false.images', compact('Products'));
@@ -48,6 +77,7 @@ class UserController extends Controller
 
     public function PostFalseCeiling(Request $request)
     {
+        $id = FalseCeiling::where('title', $request->category)->first('id');
 
         if ($request->has('Image')) {
             $image = $request->file('Image');
@@ -57,7 +87,7 @@ class UserController extends Controller
                 $files->move('images/products/', $file_name);
                 $imagepath = '/' . 'images/products' . '/' . $file_name;
                 $Images = new FalseCeilingImages();
-                $Images->category = $request->category;
+                $Images->category = $id->id;
                 $Images->Image = $imagepath;
                 $Images->save();
             }
@@ -66,8 +96,8 @@ class UserController extends Controller
     }
     public function users()
     {
-        if (Auth::user()->role == 'Admin') {
-            $user = User::get();
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
+            $user = User::where('id', '!=', auth()->id())->orderBy('id', 'desc')->get();
             return view('admin.users.table', compact('user'));
         } else {
             return redirect()->back()->with('error', 'Role is invalid!');
@@ -75,7 +105,7 @@ class UserController extends Controller
     }
     public function edit_users($id)
     {
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
             $user = User::where('id', $id)->first();
             return view('admin.users.edit', compact('user', 'id'));
         } else {
@@ -145,20 +175,7 @@ class UserController extends Controller
             $UserData->save();
         }
         $category_car = category::where('category_name', 'Car')->first();
-        $cars = Products::where('Category', $category_car->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
-
-        $category_e_cars = category::where('category_name', 'E Car')->first();
-        $e_cars = Products::where('Category', $category_e_cars->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
-
-        $category_bikes = category::where('category_name', 'Bikes')->first();
-        $bikes = Products::where('Category', $category_bikes->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
-
-        $category_e_bikes = category::where('category_name', 'E Bikes')->first();
-        $e_bikes = Products::where('Category', $category_e_bikes->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
-
-        $category_bicycle = category::where('category_name', 'BiCycles')->first();
-        $bicycle = Products::where('Category', $category_bicycle->id)->where('status', 1)->orderBy('id', 'desc')->take(6)->get();
-
+        // $Products = Products::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
 
         $Traffic = Traffic::where('id', 1)->count();
         if ($Traffic == 0) {
@@ -170,7 +187,14 @@ class UserController extends Controller
             $user->total_views = $user->total_views + 1;
             $user->save();
         }
-        return view('front.index.index', compact('cars', 'ip', 'bikes', 'e_cars', 'e_bikes', 'bicycle'));
+        $search = $request['search'] ?? '';
+        if ($search) {
+            $Products = Products::where('status', 1)->where('title', 'like', '%' . $search . '%')->get();
+        } else {
+            $Products = Products::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
+        }
+
+        return view('front.index.index', compact('Products', 'ip', 'search'));
     }
     public function wallpapers(Request $request)
     {
@@ -182,8 +206,68 @@ class UserController extends Controller
     public function productcategory(Request $request, $category)
     {
         $ip = $request->ip();
-        $category = vehicle_products::where('category', $category)->get();
-        return view('front.category.index', compact('category', 'ip'));
+        $category = Products::where('category', $category)->get();
+        return view('front.index.details_category', compact('category', 'ip'));
+    }
+    public function product_detail_by_body(Request $request, $type)
+    {
+        $ip = $request->ip();
+        $category = Products::where('Body_type', $type)->where('status', 1)->get();
+        $category = category::where('id', 1)->orWhere('id', 2)->first();
+        $brand = Brand::where('Brand_category', $category->category_name)->get();
+        $cars = Products::where('Body_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
+        $carss = Products::where('Body_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
+        return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
+    }
+    public function product_detail_by_transmission(Request $request, $type)
+    {
+        $ip = $request->ip();
+        $category = Products::where('Transmission_type', $type)->where('status', 1)->get();
+        $category = category::where('id', 1)->orWhere('id', 2)->first();
+        $brand = Brand::where('Brand_category', $category->category_name)->get();
+        $cars = Products::where('Transmission_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
+        $carss = Products::where('Transmission_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
+        return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
+    }
+    public function product_detail_by_drive(Request $request, $type)
+    {
+        $ip = $request->ip();
+        $category = Products::where('Drive_type', $type)->where('status', 1)->get();
+        $category = category::where('id', 1)->orWhere('id', 2)->first();
+        $brand = Brand::where('Brand_category', $category->category_name)->get();
+        $cars = Products::where('Drive_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
+        $carss = Products::where('Drive_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
+        return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
+    }
+    public function product_detail_by_fuel(Request $request, $type)
+    {
+        $ip = $request->ip();
+        $category = Products::where('Fuel_type', $type)->where('status', 1)->get();
+        $category = category::where('id', 1)->orWhere('id', 2)->first();
+        $brand = Brand::where('Brand_category', $category->category_name)->get();
+        $cars = Products::where('Fuel_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
+        $carss = Products::where('Fuel_type', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
+        return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
+    }
+    public function product_detail_by_capacities(Request $request, $type)
+    {
+        $ip = $request->ip();
+        $category = Products::where('Capacities', $type)->where('status', 1)->get();
+        $category = category::where('id', 1)->orWhere('id', 2)->first();
+        $brand = Brand::where('Brand_category', $category->category_name)->get();
+        $cars = Products::where('Capacities', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
+        $carss = Products::where('Capacities', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
+        return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
+    }
+    public function product_detail_by_doors(Request $request, $type)
+    {
+        $ip = $request->ip();
+        $category = Products::where('Doors', $type)->where('status', 1)->get();
+        $category = category::where('id', 1)->orWhere('id', 2)->first();
+        $brand = Brand::where('Brand_category', $category->category_name)->get();
+        $cars = Products::where('Doors', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
+        $carss = Products::where('Doors', $type)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
+        return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
     }
     public function product_detail(Request $request, $id)
     {
@@ -210,7 +294,7 @@ class UserController extends Controller
         $brand = Brand::where('Brand_category', $category->category_name)->get();
         $cars = Products::where('category', $id)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
         $carss = Products::where('category', $id)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
-        return view('front.index.details_category', compact('cars', 'carss', 'brand', 'ip'));
+        return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
     }
     public function product_detail_by_brand(Request $request, $brands)
     {
@@ -223,24 +307,26 @@ class UserController extends Controller
             $category = category::where('id', $carss->Category)->first();
             $brand = Brand::where('Brand_category', $category->category_name)->get();
             $cars = Products::where('Brand', $brands)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
-            return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip'));
+            return view('front.index.details_brand', compact('cars', 'carss', 'category', 'brand', 'ip'));
         }
     }
     public function product_detail_by_top_10(Request $request, $category)
     {
         $ip = $request->ip();
+        $category = category::where('category_name', $category)->first();
         $brand = Brand::where('Brand_category', $category)->get();
         $cars = Products::where('top_10', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
         $carss = Products::where('top_10', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->first();
-        return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip'));
+        return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip', 'category'));
     }
     public function product_detail_by_upcoming(Request $request, $category)
     {
         $ip = $request->ip();
+        $category = category::where('category_name', $category)->first();
         $brand = Brand::where('Brand_category', $category)->get();
         $carss = Products::where('Upcoming', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
         $cars = Products::where('Upcoming', 'Yes')->where('Category_name', $category)->where('status', 1)->take(12)->orderBy('id', 'desc')->get();
-        return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip'));
+        return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip', 'category'));
     }
     public function DeleteFalseCeiling($id)
     {

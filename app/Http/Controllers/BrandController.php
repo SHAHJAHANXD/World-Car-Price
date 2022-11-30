@@ -11,7 +11,7 @@ class BrandController extends Controller
 {
     public function Brand()
     {
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
             $Brand = Brand::get();
             $category = category::get();
             return view('admin.Brand.index', compact('Brand', 'category'));

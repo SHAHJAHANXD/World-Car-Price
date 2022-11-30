@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function categories()
     {
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
             $category = Category::get();
             return view('admin.categories.index', compact('category'));
         } else {

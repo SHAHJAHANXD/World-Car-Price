@@ -14,9 +14,46 @@ class ProductController extends Controller
 {
     public function products_requests()
     {
-        $product = Products::get();
-        return view('admin.products.products_requests', compact('product'));
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
+            $product = Products::get();
+            return view('admin.products.products_requests', compact('product'));
+        } else {
+            return redirect('/administrator/products-1')->with('error', 'Role is invalid!');
+        }
     }
+    public function products_requests_user($id)
+    {
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
+            $product = Products::where('user_id', $id)->get();
+            return view('admin.products.products_requests', compact('product'));
+        } else {
+            return redirect('/administrator/products-1')->with('error', 'Role is invalid!');
+        }
+    }
+
+    public function EditImage($id)
+    {
+        $image = Images::where('id', $id)->first();
+        return view('admin.products.edit_images', compact('image', 'id'));
+    }
+    public function PostEditImage(Request $request)
+    {
+        $image = Images::where('id', $request->id)->first();
+
+        if ($request->hasfile('Image')) {
+            $imageName = env('APP_URL') . 'images/Brand/' . time() . '.' . $request->Image->extension();
+            $image->Image = $imageName;
+            $request->Image->move(public_path('images/Brand'),  $imageName);
+        }
+        $image->save();
+        return redirect()->back();
+    }
+    public function DeleteImage($id)
+    {
+        Images::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Record Deleted Successfully!');
+    }
+
     public function products_description()
     {
         $Products = Products::first();
@@ -30,28 +67,33 @@ class ProductController extends Controller
     }
     public function products()
     {
-        if(Auth::user()->role == 'Admin')
-        {
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
             $Products = Products::get();
             return view('admin.products.index', compact('Products'));
         }
-        if(Auth::user()->role == 'Staff')
-        {
-            $Products = Products::where('user_id', Auth::user()->id)->get();
+        if (Auth::user()->role == 'Staff') {
+            $Products = Products::where('user_id', Auth::user()->id)->orderby('id', 'DESC')->get();
             return view('admin.products.index', compact('Products'));
         }
-
     }
     public function edit_products($id)
     {
         $Products = Products::where('id', $id)->first();
-        return view('admin.products.edit', compact('Products', 'id'));
+        $category = category::where('id', $Products->Category)->first();
+        $Brand = Brand::where('Brand_category', $category->category_name)->orderby('id', 'DESC')->get();
+        $country = Country::get();
+        return view('admin.products.edit', compact('Products', 'category', 'country', 'Brand', 'id'));
     }
+    public function edit_Images($id)
+    {
+        $image = Images::where('product_id', $id)->orderby('id', 'DESC')->get();
+        return view('admin.products.editImages', compact('image', 'id'));
+    }
+
     public function new_products($category)
     {
         $category = category::where('category_name', $category)->first();
-
-        $Brand = Brand::where('Brand_category', $category->category_name)->get();
+        $Brand = Brand::where('Brand_category', $category->category_name)->orderby('id', 'DESC')->get();
         $country = Country::get();
         return view('admin.products.new', compact('category', 'Brand', 'country'));
     }
@@ -80,6 +122,9 @@ class ProductController extends Controller
         $product->Fuel_type = $request->Fuel_type;
         $product->Capacities = $request->Capacities;
         $product->Doors = $request->Doors;
+        $product->Millage = $request->Millage;
+        $product->Features = $request->Features;
+        $product->Top_speed = $request->Top_speed;
         $product->Category = $request->Category;
         $product->Category_name = $category->category_name;
         $product->Brand = $request->Brand;
@@ -122,17 +167,52 @@ class ProductController extends Controller
     }
     public function post_edit_products(Request $request)
     {
-        $products = products::where('id', $request->id)->first();
-        $products->products_name = $request->products_name;
-        if ($request->hasfile('products_image')) {
-            $imageName = env('APP_URL') . 'images/products/' . time() . '.' . $request->products_image->extension();
-            $products->products_image = $imageName;
-            $request->products_image->move(public_path('images/products'),  $imageName);
-        }
-        $products->save();
-        return redirect()->route('admin.products')->with('success', 'products updated successfully!');
-    }
 
+        $category = category::where('id', $request->Category)->first();
+        $product = Products::where('id', $request->id)->first();
+        $product->user_id = Auth::user()->id;
+        $product->user_name = Auth::user()->name;
+        $product->user_email = Auth::user()->email;
+        $product->Body_type = $request->Body_type;
+        $product->Transmission_type = $request->Transmission_type;
+        $product->Drive_type = $request->Drive_type;
+        $product->Fuel_type = $request->Fuel_type;
+        $product->Capacities = $request->Capacities;
+        $product->Doors = $request->Doors;
+        $product->Category = $request->Category;
+        $product->Category_name = $category->category_name;
+        $product->Brand = $request->Brand;
+        $product->top_10 = $request->top_10;
+        $product->Upcoming = $request->Upcoming;
+        $product->Tags = $request->Tags;
+        $product->Product_status = $request->Product_status;
+        $product->Title = $request->Title;
+        $product->Year = $request->Year;
+        $product->Image_alt = $request->Image_alt;
+        $product->Short_Description = $request->Short_Description;
+        $product->Description = $request->Description;
+        $product->Price = $request->Price;
+        $product->Country = $request->Country;
+        $product->save();
+        return redirect()->route('admin.products1')->with('success', 'products updated successfully!');
+    }
+    public function save_images(Request $request)
+    {
+        if ($request->has('Multiple_images')) {
+            $image = $request->file('Multiple_images');
+            foreach ($image as $files) {
+                $file_origninl_name =  $files->getClientOriginalName();
+                $file_name = $file_origninl_name . time()  . "." . $files->getClientOriginalExtension();
+                $files->move('images/products/', $file_name);
+                $imagepath = url('/') . '/' . 'images/products' . '/' . $file_name;
+                $Images = new Images();
+                $Images->product_id = $request->id;
+                $Images->Image = $imagepath;
+                $Images->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Images Saved Successfully!');
+    }
     public function activeproducts($id)
     {
         $products = products::where('id', $id)->first();

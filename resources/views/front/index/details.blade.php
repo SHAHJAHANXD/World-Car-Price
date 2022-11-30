@@ -5,7 +5,9 @@
 @section('content')
 <main class="main">
     <div class="container">
-        <section class="row row--grid">
+        <section class="row row--grid" style="
+        justify-content: center;
+    ">
             <div class="col-12">
                 @php
                 $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
@@ -26,7 +28,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-12 col-lg-12">
+            <div class="col-12 col-lg-8">
                 <div class="details">
                     <div class="splide splide--details details__slider">
                         <div class="splide__arrows">
@@ -45,7 +47,7 @@
                                 @endphp
                                 @foreach ($images as $images)
                                 <li class="splide__slide">
-                                    <img src="{{ $images->Image }}" alt="{{ $Products->Title }}" style="height: 600px;">
+                                    <img src="{{ $images->Image }}" alt="{{ $Products->Title }}" style="height: 320px;">
                                 </li>
                                 @endforeach
                             </ul>
@@ -53,6 +55,7 @@
                     </div>
                 </div>
             </div>
+          <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <div class="offer">
@@ -87,15 +90,16 @@
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="offer">
-                        <span class="offer__title">{{ $Products->Title }} Long Description</span>
+                        <span class="offer__title">{{ $Products->Title }} Specification</span>
                         <p>
+                           <div class="row">
                             {!! $Products->Description !!}
+                           </div>
                         </p>
                     </div>
                 </div>
             </div>
-
-            <!-- end offer -->
+          </div>
         </section>
     </div>
 </main>

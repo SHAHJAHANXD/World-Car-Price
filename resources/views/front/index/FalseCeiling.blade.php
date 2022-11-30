@@ -33,15 +33,15 @@ World Car Price
                     <div class="splide__track">
                         <ul class="splide__list">
                             @php
-                            $images = \App\Models\FalseCeilingImages::where('category', $FalseCeilingImages->title)->first();
+                            $images = \App\Models\FalseCeilingImages::where('category', $FalseCeilingImages->id)->first();
                             @endphp
                             <li class="splide__slide">
-                                <img src="{{ $images->Image }}" alt="Ceiling Images" style="height: 245px; width: 330px; border-radius: 20px; margin-bottom: 10px;">
+                                <img src="{{ $images->Image ?? ''}}" alt="Ceiling Images" style="height: 245px; width: 330px; border-radius: 20px; margin-bottom: 10px;">
                             </li>
                         </ul>
                     </div>
                     <div class="car__title">
-                        <h3 class="car__name"><a href="/wallpapers-detail/{{ $FalseCeilingImages->title }}">{{ $FalseCeilingImages->title }}</a></h3>
+                        <h3 class="car__name"><a href="/wallpapers-detail/{{ $FalseCeilingImages->id }}">{{ $FalseCeilingImages->title }}</a></h3>
 
                     </div>
                 </div>

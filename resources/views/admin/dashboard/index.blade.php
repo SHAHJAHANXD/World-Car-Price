@@ -53,40 +53,77 @@ Admin | Dashboard
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <section class="content">
+                <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Latest Users</h3>
-                                    <div class="card-tools">
-                                        <span class="badge badge-danger">{{ $users->count() }} New Users</span>
+                                    <h3 class="card-title">All Users DataTable</h3>
+                                    <div class="card-body" style="text-align: end;">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                                            Add New User
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="card-body p-0">
-                                    <ul class="users-list clearfix">
-                                        @foreach ($users as $users)
-                                        <li>
-                                            @if ($users->profile_image == true)
-                                            <img src="{{ env('APP_URL').'images/users/'.$users->profile_image; }}" style="max-width: 70%;" alt="User Image">
-                                            @else
-                                            <img src="{{ asset('images/guest.png') }}" style="max-width: 70%;" alt="User Image">
-                                            @endif
-                                            <a class="users-list-name" href="#" style="font-size: 20px;font-weight: 600;">{{ $users->name }}</a>
-                                            <span class="users-list-date">Joined: {{$users->created_at->diffForHumans()}}</span>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <a href="javascript:">View All Users</a>
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Id</th>
+                                                <th class="text-center">Image</th>
+                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Email</th>
+                                                <th class="text-center">Role</th>
+                                                <th class="text-center">Account Status</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($users as $users)
+                                            <tr>
+                                                <td class="text-center">{{ $users->id }}</td>
+                                                <td class="text-center">
+                                                    @if ($users->profile_image == true)
+                                                    <img src="{{ $users->profile_image }}" style="border-radius: 100px; width: 50px; height: 50px;" alt="User Image">
+                                                    @else
+                                                    <img src="{{ asset('images/guest.png') }}" style="border-radius: 100px; width: 50px; height: 50px;" alt="User Image">
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">{{ $users->name }}</td>
+                                                <td class="text-center">{{ $users->email }}</td>
+                                                <td class="text-center">{{ $users->role }}</td>
+
+                                                @if ($users->status == 1)
+                                                <td class="text-center">
+                                                    <a class="btn btn-success">Active</a>
+                                                </td>
+                                                @else
+                                                <td class="text-center">
+                                                    <a class="btn btn-danger">Blocked</a>
+                                                </td>
+                                                @endif
+                                                @if ($users->status == 1)
+                                                <td class="text-center">
+                                                    <a href="{{ route('admin.edit_users', $users->id) }}" class="btn btn-primary">Edit</a>
+                                                    <a href="{{ route('admin.blockuser', $users->id) }}" class="btn btn-danger">Block</a>
+                                                </td>
+                                                @else
+                                                <td class="text-center">
+                                                    <a href="{{ route('admin.edit_users', $users->id) }}" class="btn btn-primary">Edit</a>
+                                                    <a href="{{ route('admin.activeuser', $users->id) }}" class="btn btn-success">Active</a>
+                                                </td>
+                                                @endif
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </section>
 </div>

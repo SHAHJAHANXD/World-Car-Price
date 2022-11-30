@@ -46,17 +46,19 @@ Admin | All Users
                                         <th class="text-center">Name</th>
                                         <th class="text-center">Email</th>
                                         <th class="text-center">Role</th>
+                                        <th class="text-center">View Products</th>
                                         <th class="text-center">Account Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
+                                 {{-- /products-requests-user --}}
                                 <tbody>
                                     @foreach ($user as $users)
                                     <tr>
                                         <td class="text-center">{{ $users->id }}</td>
                                         <td class="text-center">
                                             @if ($users->profile_image == true)
-                                            <img src="{{ env('APP_URL').'images/users/'.$users->profile_image; }}" style="border-radius: 100px; width: 50px; height: 50px;" alt="User Image">
+                                            <img src="{{ $users->profile_image }}" style="border-radius: 100px; width: 50px; height: 50px;" alt="User Image">
                                             @else
                                             <img src="{{ asset('images/guest.png') }}" style="border-radius: 100px; width: 50px; height: 50px;" alt="User Image">
                                             @endif
@@ -64,6 +66,7 @@ Admin | All Users
                                         <td class="text-center">{{ $users->name }}</td>
                                         <td class="text-center">{{ $users->email }}</td>
                                         <td class="text-center">{{ $users->role }}</td>
+                                        <td class="text-center"><a href="/administrator/products-requests-user/{{ $users->id }}">View</a></td>
 
                                         @if ($users->status == 1)
                                         <td class="text-center">
@@ -121,6 +124,7 @@ Admin | All Users
                     <label>Role</label>
                     <select name="role" id="" class="form-control">
                         <option value="Staff" selected>Satff</option>
+                        <option value="Manager" selected>Manager</option>
                         <option value="Admin">Admin</option>
                     </select>
                     @if ($errors->has('role'))

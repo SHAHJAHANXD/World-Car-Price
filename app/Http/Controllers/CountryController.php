@@ -10,7 +10,7 @@ class CountryController extends Controller
 {
     public function countries()
     {
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
             $Country = Country::get();
             return view('admin.countries.index', compact('Country'));
         } else {
@@ -28,6 +28,7 @@ class CountryController extends Controller
         $Country->name = $request->name;
         $Country->rate = $request->rate;
         $Country->symbol = $request->symbol;
+        $Country->status = 1;
         $Country->save();
         return redirect()->route('admin.countries')->with('success', 'Record updated successfully!');
     }

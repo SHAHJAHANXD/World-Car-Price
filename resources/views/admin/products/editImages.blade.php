@@ -34,55 +34,32 @@ Admin | All Products
     <section class="content">
         <div class="container-fluid">
             <div class="row" style="    text-align: end; margin-bottom: 10px;">
-                <div class="col-12">
-                    <a href="{{ route('admin.new_product') }}" class="btn btn-success">Add New Product</a>
+                <div class="card-body" style="text-align: end;">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                        Add New Images
+                    </button>
                 </div>
             </div>
             <div class="row">
-                @foreach ($Products as $product)
+                @foreach ($image as $product)
                 <div class="col-12 col-sm-6 col-md-6 col-xl-3 col-lg-4">
-                    @php
-                    $category = \App\Models\category::where('id', $product->Category)->first();
-                    $images = \App\Models\Images::where('product_id', $product->id)->first();
-                    @endphp
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ $images->Image }}" alt="Card image cap">
+                        <img class="card-img-top" src="{{ $product->Image }}" alt="Card image cap">
                         <div class="card-body">
-                            <p class="card-text">Title: <b>{{ $product->Title }}</b></p>
-                            <p class="card-text">Category: <b>{{ $category->category_name }}</b></p>
-                            <p class="card-text">Model: <b>{{ $product->Year }}</b></p>
-
-                            <form method="POST" action="{{ route('admin.deleteproducts1', $product->id) }}">
+                            <form method="POST" action="{{ route('admin.DeleteImage', $product->id) }}">
                                 @csrf
                                 <input name="_method" type="hidden" value="DELETE">
                                 <div class="row">
                                     <div class="col-4 text-center">
 
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-primary" style="    border-radius: 5px;" data-toggle="dropdown">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" onclick="return confirm('Are you sure? You want to edit this record?')" href="/administrator/edit-products-1/{{ $product->id }}">Edit Product</a>
-                                                <a class="dropdown-item" onclick="return confirm('Are you sure? You want to edit this record?')" href="/administrator/edit-images-1/{{ $product->id }}">Edit Product Images</a>
-                                            </div>
+                                            <a href="{{ route('admin.EditImage', $product->id) }}" class="btn btn-primary" >Edit</a>
                                         </div>
 
                                     </div>
                                     <div class="col-4 text-center">
                                         <button type="submit" class="btn btn-danger show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
                                     </div>
-                                    @if (Auth::user()->role == 'Admin')
-                                    @if ($product->status == 1)
-                                    <div class="col-4 text-center">
-                                        <a href="{{ route('admin.blockproducts1', $product->id) }}" class="btn btn-danger">Block</a>
-                                    </div>
-                                    @else
-                                    <div class="col-4 text-center">
-                                        <a href="{{ route('admin.activeproducts1', $product->id) }}" class="btn btn-success">Active</a>
-                                    </div>
-                                    @endif
-                                    @endif
                                 </div>
                             </form>
                         </div>
@@ -92,6 +69,32 @@ Admin | All Products
             </div>
         </div>
     </section>
+</div>
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">New Category</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('admin.save_images') }}" enctype="multipart/form-data" method="POST">
+                    @csrf
+                    <input type="text" hidden name="id" id="" value="{{ $id }}">
+                    <label for="name">Images</label>
+                    <input type="file" class="form-control" id="name" name="Multiple_images[]" multiple>
+                    @if ($errors->has('Multiple_images'))
+                    <span class="text-danger">{{ $errors->first('Multiple_images') }}</span>
+                    @endif
+                    <div class="div" style="margin-top: 20px; ">
+                        <button type="submit" class="btn btn-primary form-control">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('extra-scripts')
