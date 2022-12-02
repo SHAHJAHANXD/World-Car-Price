@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FalseCeilingController;
@@ -61,7 +62,15 @@ Route::prefix('administrator')->group(function () {
         Route::get('/users', [UserController::class, 'users'])->name('admin.users');
         Route::post('/update-profile', [UserController::class, 'updateprofile'])->name('admin.updateprofile');
         Route::get('/edit-users/{id}', [UserController::class, 'edit_users'])->name('admin.edit_users');
+        Route::prefix('blog')->group(function () {
+            Route::get('/category-list', [BlogController::class, 'category'])->name('blog.category_list');
+            Route::post('/category-post', [BlogController::class, 'post_category'])->name('blog.post_category');
 
+            Route::get('/list', [BlogController::class, 'list'])->name('blog.list');
+            Route::delete('/delete/{id}', [BlogController::class, 'delete'])->name('blog.delete');
+            Route::get('/create', [BlogController::class, 'create'])->name('blog.create');
+            Route::post('/post-blog', [BlogController::class, 'post_blog'])->name('blog.post_blog');
+        });
         Route::post('/edit-user', [UserController::class, 'save_edit_users'])->name('admin.save_edit_users');
         Route::post('/save-user', [UserController::class, 'save_user'])->name('admin.save_user');
 
