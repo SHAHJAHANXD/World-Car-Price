@@ -68,7 +68,7 @@ class ProductController extends Controller
     public function products()
     {
         if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
-            $Products = Products::get();
+            $Products = Products::orderBy('id', 'desc')->get();
             return view('admin.products.index', compact('Products'));
         }
         if (Auth::user()->role == 'Staff') {

@@ -11,18 +11,17 @@ class CategoryController extends Controller
 {
     public function categories()
     {
-        if (Auth::user()->role == 'Admin' ||Auth::user()->role == 'Manager') {
+        if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Manager') {
             $category = Category::get();
             return view('admin.categories.index', compact('category'));
         } else {
             return redirect()->back()->with('error', 'Role is invalid!');
         }
-
     }
     public function edit_categories($id)
     {
         $category = category::where('id', $id)->first();
-        return view('admin.categories.edit', compact('category','id'));
+        return view('admin.categories.edit', compact('category', 'id'));
     }
 
 
@@ -36,7 +35,7 @@ class CategoryController extends Controller
             $request->category_image->move(public_path('images/categories'),  $imageName);
         }
         $category->save();
-        return redirect()->back()->with('success','Category created successfully!');
+        return redirect()->back()->with('success', 'Category created successfully!');
     }
     public function post_edit_categories(Request $request)
     {
@@ -48,27 +47,27 @@ class CategoryController extends Controller
             $request->category_image->move(public_path('images/categories'),  $imageName);
         }
         $category->save();
-        return redirect()->route('admin.categories')->with('success','Category updated successfully!');
+        return redirect()->route('admin.categories')->with('success', 'Category updated successfully!');
     }
 
     public function activeCategory($id)
     {
-        $category = category::where('id' , $id)->first();
+        $category = category::where('id', $id)->first();
         $category->category_status = 1;
         $category->save();
-        return redirect()->back()->with('success','Status updated successfully!');
+        return redirect()->back()->with('success', 'Status updated successfully!');
     }
     public function blockCategory($id)
     {
-        $category = category::where('id' , $id)->first();
+        $category = category::where('id', $id)->first();
         $category->category_status = 0;
         $category->save();
-        return redirect()->back()->with('success','Status updated successfully!');
+        return redirect()->back()->with('success', 'Status updated successfully!');
     }
     public function deletecategories($id)
     {
-        $category = category::where('id' , $id)->first();
+        $category = category::where('id', $id)->first();
         $category->delete();
-        return redirect()->back()->with('success','Record deleted successfully!');
+        return redirect()->back()->with('success', 'Record deleted successfully!');
     }
 }

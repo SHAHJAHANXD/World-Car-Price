@@ -14,7 +14,7 @@ Details Page
                 </button>
             </div>
             @endif<div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <div class="row">
                         @foreach($cars as $cars)
                         <div class="col-md-6">
@@ -28,13 +28,13 @@ Details Page
                                         @endphp
 
                                         <li class="splide__slide">
-                                            <a href="/product-detail/{{ $cars->id }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; width: 370px; border-radius: 20px; margin-bottom: 10px;"></a>
+                                            <a  href="/product-detail/{{ $cars->id }}"> <img id="product_img" src="{{ $images->Image }}" alt="{{ $cars->Title }}"></a>
                                         </li>
                                     </ul>
                                 </div>
 
                                 <div class="car__title">
-                                    <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
+                                    <h3 class="car__name"><a class="Car_name_modify" href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
                                     <span class="car__year"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Year }}</a></span>
                                 </div>
                                 <div class="car__footer">
@@ -47,7 +47,7 @@ Details Page
 
                 </div>
                 @if ($carss == true)
-                <div class="col-lg-4" style="border: 1px solid;border-radius: 10px;">
+                <div class="col-lg-4 offset-lg-1" style="border: 1px solid;border-radius: 10px;">
                     <div class="">
                         <div class="offer">
                             <span class="offer__title" style="color: red">BROWSE BY BRANDS</span>

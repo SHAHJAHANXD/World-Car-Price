@@ -29,9 +29,6 @@ Route::get('/clear-cache', [UserController::class, 'clearcache'])->name('clearca
 Route::get('/change-country', [UserController::class, 'country'])->name('country');
 Route::get('/choose-country/{id}', [UserController::class, 'change_country'])->name('change_country');
 
-Route::get('/wallpapers', [UserController::class, 'wallpapers'])->name('wallpapers');
-
-Route::get('/wallpapers-detail/{id}', [UserController::class, 'wallpapers_detail'])->name('wallpapers_detail');
 
 Route::get('/get-product-of-/{category}', [UserController::class, 'productcategory'])->name('productcategory');
 
@@ -48,9 +45,9 @@ Route::get('/product-detail-by-doors/{type}', [UserController::class, 'product_d
 
 Route::get('/product-detail-by-brand/{brands}', [UserController::class, 'product_detail_by_brand'])->name('product_detail_by_brand');
 
-Route::get('/product-detail-by-upcoming/{category}', [UserController::class, 'product_detail_by_upcoming'])->name('product_detail_by_upcoming');
+Route::get('/product-detail-by-upcoming/{id}/{category}', [UserController::class, 'product_detail_by_upcoming'])->name('product_detail_by_upcoming');
 
-Route::get('/product-detail-by-top-10/{category}', [UserController::class, 'product_detail_by_top_10'])->name('product_detail_by_top_10');
+Route::get('/product-detail-by-top-10/{id}/{category}', [UserController::class, 'product_detail_by_top_10'])->name('product_detail_by_top_10');
 
 Route::prefix('administrator')->group(function () {
     Route::get('/login', [AdminController::class, 'login'])->name('admin.login');

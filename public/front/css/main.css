@@ -6714,14 +6714,14 @@ body::-webkit-scrollbar-thumb {
     border-radius: 4px !important;
 }
 
-.product_img {
-    height: 245px;
-    width: 370px;
+#product_img {
+    height: 160px;
+    width: 250px;
     border-radius: 20px;
     margin-bottom: 10px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 376px) {
+@media only screen and (min-width: 320px) and (max-width: 376px) {
     .product_img {
         width: 310px;
     }
@@ -6738,9 +6738,21 @@ body::-webkit-scrollbar-thumb {
 
     .splide__slide img {
         vertical-align: bottom;
-        width: 247px !important;
+        width: 255px;
         display: block;
-        height: 140px !important;
+        height: 140px;
+    }
+
+    .Car_image {
+        width: 255px !important;
+        display: block;
+        height: 200px !important;
+    }
+
+    #product_img {
+        width: 270px !important;
+        display: block;
+        height: 170px !important;
     }
 
     .sign__form {
@@ -6765,12 +6777,22 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
-@media screen and (min-width: 376px) and (max-width: 426px) {
+@media screen and (min-width: 376px) and (max-width: 424px) {
     .MsoNormalTable {
         margin-top: 30px !important;
         width: 350px !important;
         margin-left: 0px !important;
 
+    }
+
+    .Car_image {
+        height: 220px !important;
+    }
+
+    #product_img {
+        width: 320px !important;
+        display: block;
+        height: 220px !important;
     }
 
     .sign__form--contacts,
@@ -6799,23 +6821,29 @@ body::-webkit-scrollbar-thumb {
 
     .splide__slide img {
         vertical-align: bottom;
-        width: 310px !important;
-        height: 170px !important;
+        width: 310px;
+        height: 170px;
     }
 }
 
-@media screen and (min-width: 426px) and (max-width: 767px) {
+@media only screen and (min-width: 424px) and (max-width: 767px) {
     .main__title {
         text-align: center;
         margin-bottom: 5px;
         margin-top: 30px;
     }
+
+    #product_img {
+        height: 220px !important;
+    }
+
     .MsoNormalTable {
         margin-top: 30px !important;
         width: 400px !important;
         margin-left: 0px !important;
 
     }
+
     .sign__form--profile .sign__btn {
         margin: 6px 8px 15px;
         width: 105px;
@@ -6836,14 +6864,28 @@ body::-webkit-scrollbar-thumb {
         width: 270px;
     }
 
+    #product_img {
+        height: 120px;
+        width: 190px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+    }
+
     .sign__form--profile .sign__btn {
         margin: 6px 0px 15px;
         width: 91px;
     }
 
     .splide__slide img {
+        height: 120px;
         vertical-align: bottom;
-        width: 550px !important;
+        width: 190px;
+    }
+
+    .Car_image {
+        height: 170px !important;
+        vertical-align: bottom;
+        width: 270px !important;
     }
 
     .sign__form--contacts,
@@ -6853,12 +6895,67 @@ body::-webkit-scrollbar-thumb {
         margin-right: auto;
         display: block;
     }
-    @media screen and (min-width: 991px) and (max-width: 1240px) {
+
+    @media screen and (min-width: 991px) and (max-width: 1023px) {
         .MsoNormalTable {
             margin-top: 30px !important;
             width: 400px !important;
             margin-left: 0px !important;
 
         }
+
+        .splide__slide img {
+            height: 200px !important;
+            vertical-align: bottom;
+            width: 320px !important;
+        }
     }
+
+    @media screen and (min-width: 1023px) and (max-width: 1240px) {
+        .MsoNormalTable {
+            margin-top: 30px !important;
+            width: 400px !important;
+            margin-left: 0px !important;
+
+        }
+
+        .Car_image {
+            height: 200px !important;
+            vertical-align: bottom;
+            width: 320px !important;
+        }
+
+        #product_img {
+            height: 120px !important;
+            width: 190px !important;
+            border-radius: 20px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .wallpaper_image {
+            height: 430px;
+            width: 430px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.car__name:hover {
+    background: #c50820 !important;
+    color: white !important;
+    padding: 5px !important;
+    transition: 0.4s;
+    border-radius: 5px !important;
+}
+.car__price
+{
+    background: #eaeaea;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.Car_name_modify:hover
+{
+    color: white !important;
 }

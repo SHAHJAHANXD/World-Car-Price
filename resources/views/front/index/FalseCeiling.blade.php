@@ -41,7 +41,7 @@ World Car Price
                         </ul>
                     </div>
                     <div class="car__title">
-                        <h3 class="car__name"><a href="/wallpapers-detail/{{ $FalseCeilingImages->id }}">{{ $FalseCeilingImages->title }}</a></h3>
+                        <h3 class="car__name"><a href="/wallpapers-detail/{{ $FalseCeilingImages->id }}?page=1">{{ $FalseCeilingImages->title }}</a></h3>
 
                     </div>
                 </div>

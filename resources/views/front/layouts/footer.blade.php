@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-6 col-md-4 col-lg-4 col-xl-3 order-1 order-md-2 order-lg-2 order-xl-3 offset-md-2 offset-lg-0">
+            <div class="col-6 col-md-3 col-lg-3 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
                 <h6 class="footer__title">Main Manu</h6>
                 <div class="footer__nav">
                     <a href="">Home</a>
@@ -11,7 +11,7 @@
                     <a href="">Terms-and-Conditions</a>
                 </div>
             </div>
-            <div class="col-6 col-md-4 col-lg-4 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
+            <div class="col-6 col-md-3 col-lg-3 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
                 <h6 class="footer__title">Categories</h6>
                 <div class="footer__nav">
                     <a href="">Cars</a>
@@ -24,7 +24,7 @@
             @php
             $category = \App\Models\category::take(6)->get();
             @endphp
-            <div class="col-6 col-md-4 col-lg-4 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
+            <div class="col-6 col-md-3 col-lg-3 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
                 <h6 class="footer__title">Upcoming</h6>
                 <div class="footer__nav">
                     @foreach ($category as $category)
@@ -36,7 +36,7 @@
             @php
             $category = \App\Models\category::take(6)->get();
             @endphp
-            <div class="col-6 col-md-4 col-lg-4 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
+            <div class="col-6 col-md-3 col-lg-3 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
                 <h6 class="footer__title">Upcoming</h6>
                 <div class="footer__nav">
                     @foreach ($category as $category)
