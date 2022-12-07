@@ -1,6 +1,9 @@
 @extends('front.layout')
 @section('title')
-    World Car Price
+Get The Latest New Car Price, launching & Specifications - World Car Price
+@endsection
+@section('description')
+World Car Price provides New Cars, e-cars, Bikes, e-bike launching, Specifications, Comparison Photos of the Interior and Exterior, and Reviews.
 @endsection
 @section('content')
     <main class="main">
@@ -42,7 +45,7 @@
                                         $images = \App\Models\Images::where('product_id', $cars->id)->first();
                                     @endphp
                                     <li class="splide__slide">
-                                        <a href="/product-detail/{{ $cars->id }}">
+                                        <a href="/product-detail/{{ $cars->slug }}">
                                             <div class="div">
                                                 <img id="product_img"
                                                 src="{{ $images->Image }}" alt="{{ $cars->Title }}">
@@ -55,7 +58,7 @@
                             </div>
                             <div class="car__title">
                                 <h3 class="car__name"><a class="Car_name_modify"
-                                        href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}
+                                        href="/product-detail/{{ $cars->slug }}">{{ $cars->Title }}
                                         {{ $cars->Year }}</a></h3>
                             </div>
                             <div class="car__footer">

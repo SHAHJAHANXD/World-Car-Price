@@ -94,6 +94,10 @@ Admin | All Products
                                     <input required type="text" class="form-control" name="Title" placeholder="Enter Product Name">
                                 </div>
                                 <div class="form-group">
+                                    <label>Product Slug</label>
+                                    <input required type="text" class="form-control" name="slug" placeholder="Enter Product Slug">
+                                </div>
+                                <div class="form-group">
                                     <label>Year</label>
                                     <input required type="number" class="form-control" name="Year" placeholder="Enter Year">
                                 </div>

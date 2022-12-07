@@ -25,10 +25,10 @@
             $category = \App\Models\category::take(6)->get();
             @endphp
             <div class="col-6 col-md-3 col-lg-3 col-xl-3 order-2 order-md-4 order-lg-3 order-xl-4">
-                <h6 class="footer__title">Upcoming</h6>
+                <h6 class="footer__title">Top 10</h6>
                 <div class="footer__nav">
                     @foreach ($category as $category)
-                    <a href="/product-detail-by-top-10/{{ $category->category_name }}">Best {{ $category->category_name }}</a>
+                    <a href="/top-10/{{ $category->id }}/{{ $category->category_name }}">Best {{ $category->category_name }}</a>
                     @endforeach
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <h6 class="footer__title">Upcoming</h6>
                 <div class="footer__nav">
                     @foreach ($category as $category)
-                    <a href="/product-detail-by-upcoming/{{ $category->category_name }}">Upcoming {{ $category->category_name }}</a>
+                    <a href="/upcoming/{{ $category->id }}/{{ $category->category_name }}">Upcoming {{ $category->category_name }}</a>
                     @endforeach
                 </div>
             </div>

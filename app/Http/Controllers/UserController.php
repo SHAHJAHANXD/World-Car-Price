@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Country;
+use App\Models\Images;
 use App\Models\UserData;
 use Illuminate\Support\Facades\Artisan;
 
@@ -338,31 +339,35 @@ class UserController extends Controller
             return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip'));
         }
     }
-    public function product_detail(Request $request, $id)
+    public function product_detail(Request $request, $name)
     {
-        $found = Products::where('id', $id)->count();
+        $found = Products::where('slug', $name)->count();
         if ($found == 0) {
             return redirect()->back();
         } else {
             $ip = $request->ip();
-            $Products = Products::where('id', $id)->first();
+            $Products = Products::where('slug', $name)->first();
+            $image = Images::where('product_id', $Products->id)->first();
+
             if ($ip == true) {
-                return view('front.index.details', compact('Products', 'ip'));
+                return view('front.index.details', compact('Products', 'ip','image'));
             } else {
                 $ip = "127.0.0.1";
-                return view('front.index.details', compact('Products', 'ip'));
+                return view('front.index.details', compact('Products', 'ip','image'));
             }
         }
     }
 
 
-    public function product_detail_by_category(Request $request, $id)
+    public function product_detail_by_category(Request $request, $category)
     {
         $ip = $request->ip();
-        $category = category::where('id', $id)->first();
-        $brand = Brand::where('Brand_category', $category->category_name)->get();
-        $cars = Products::where('category', $id)->where('status', 1)->orderBy('id', 'desc')->paginate(20);
-        $carss = Products::where('category', $id)->where('status', 1)->orderBy('id', 'desc')->first();
+
+        $id = category::where('category_name', $category)->first();
+        $category = category::where('category_name', $category)->first();
+        $brand = Brand::where('Brand_category', $id->category_name)->get();
+        $cars = Products::where('category', $id->id)->where('status', 1)->orderBy('id', 'desc')->paginate(20);
+        $carss = Products::where('category', $id->id)->where('status', 1)->orderBy('id', 'desc')->first();
         if ($request->ajax()) {
     		$view = view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip' , 'id'))->render();
             return response()->json(['html'=>$view]);
@@ -387,10 +392,10 @@ class UserController extends Controller
             $cars = Products::where('Brand', $brands)->where('status', 1)->orderBy('id', 'desc')->get();
 
             if ($ip == true) {
-                return view('front.index.details_brand', compact('cars', 'carss', 'category', 'brand', 'ip'));
+                return view('front.index.details_brand', compact('cars', 'brands','carss', 'category', 'brand', 'ip'));
             } else {
                 $ip = "127.0.0.1";
-                return view('front.index.details_brand', compact('cars', 'carss', 'category', 'brand', 'ip'));
+                return view('front.index.details_brand', compact('cars','brands' ,'carss', 'category', 'brand', 'ip'));
             }
         }
     }

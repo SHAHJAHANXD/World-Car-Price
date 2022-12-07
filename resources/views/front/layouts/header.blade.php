@@ -50,7 +50,7 @@
                                 @endphp
                                 <ul class="dropdown-menu header__nav-menu" aria-labelledby="dropdownMenu">
                                     @foreach ($category as $category)
-                                    <li><a href="/product-detail-by-category/{{ $category->id }}">{{ $category->category_name }}</a></li>
+                                    <li><a href="/{{ $category->category_name }}">{{ $category->category_name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
@@ -62,7 +62,7 @@
                                 @endphp
                                 <ul class="dropdown-menu header__nav-menu" aria-labelledby="dropdownMenu">
                                     @foreach ($category as $category)
-                                    <li><a href="/product-detail-by-upcoming/{{ $category->id }}/{{ $category->category_name }}">Upcoming {{ $category->category_name }}</a></li>
+                                    <li><a href="/upcoming/{{ $category->id }}/{{ $category->category_name }}">Upcoming {{ $category->category_name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
@@ -74,7 +74,7 @@
                                 @endphp
                                 <ul class="dropdown-menu header__nav-menu" aria-labelledby="dropdownMenu">
                                     @foreach ($category as $category)
-                                    <li><a href="/product-detail-by-top-10/{{ $category->id }}/{{ $category->category_name }}">Top 10 {{ $category->category_name }}</a></li>
+                                    <li><a href="/top-10/{{ $category->id }}/{{ $category->category_name }}">Top 10 {{ $category->category_name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>

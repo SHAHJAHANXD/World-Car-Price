@@ -46,12 +46,11 @@ Admin | All Products
                     $images = \App\Models\Images::where('product_id', $product->id)->first();
                     @endphp
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ $images->Image }}" alt="Card image cap">
+                        {{-- <img class="card-img-top" src="{{ $images->Image }}" alt="Card image cap"> --}}
                         <div class="card-body">
                             <p class="card-text">Title: <b>{{ $product->Title }}</b></p>
                             <p class="card-text">Category: <b>{{ $category->category_name }}</b></p>
                             <p class="card-text">Model: <b>{{ $product->Year }}</b></p>
-
                             <form method="POST" action="{{ route('admin.deleteproducts1', $product->id) }}">
                                 @csrf
                                 <input name="_method" type="hidden" value="DELETE">

@@ -1,6 +1,9 @@
 @extends('front.layout')
 @section('title')
-Details Page
+New Upcoming {{ $category->category_name }} Price & Specification - World Car Price
+@endsection
+@section('description')
+Find upcoming {{ $category->category_name }} models' prices in 2023, their pictures, and specifications - Compare cars, read new car reviews and post ratings at Car World Price.
 @endsection
 @section('content')
 <main class="main">
@@ -8,6 +11,18 @@ Details Page
         <section class="row row--grid">
             <div class="row">
                 <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 style="    margin-top: 25px;">
+                            New {{ $brands }} 2023, New Car Prices And Specs
+                            </h1>
+                        </div>
+                        <div class="col-12">
+                           <p>
+                            Find the best new released and upcoming 2023-2024 {{ $brands }} cars prices, full specifications, and newly released features on World Car Price
+                           </p>
+                        </div>
+                    </div>
                     <div class="row">
                         @foreach($cars as $cars)
                         <div class="col-md-6">
@@ -21,14 +36,14 @@ Details Page
                                         @endphp
 
                                         <li class="splide__slide">
-                                            <a href="/product-detail/{{ $cars->id }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; width: 370px; border-radius: 20px; margin-bottom: 10px;"></a>
+                                            <a href="/product-detail/{{ $cars->Title }}"> <img src="{{ $images->Image }}" alt="{{ $cars->Title }}" style="height: 245px; width: 370px; border-radius: 20px; margin-bottom: 10px;"></a>
                                         </li>
                                     </ul>
                                 </div>
 
                                 <div class="car__title">
-                                    <h3 class="car__name"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Title }}</a></h3>
-                                    <span class="car__year"><a href="/product-detail/{{ $cars->id }}">{{ $cars->Year }}</a></span>
+                                    <h3 class="car__name"><a href="/product-detail/{{ $cars->Title }}">{{ $cars->Title }}</a></h3>
+                                    <span class="car__year"><a href="/product-detail/{{ $cars->Title }}">{{ $cars->Year }}</a></span>
                                 </div>
                                 <div class="car__footer">
                                     <span class="car__price">{{ $country->symbol }} {{ $cars->Price * $country->rate }}</span>

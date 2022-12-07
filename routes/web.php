@@ -32,9 +32,9 @@ Route::get('/choose-country/{id}', [UserController::class, 'change_country'])->n
 
 Route::get('/get-product-of-/{category}', [UserController::class, 'productcategory'])->name('productcategory');
 
-Route::get('/product-detail/{id}', [UserController::class, 'product_detail'])->name('product_detail');
+Route::get('/product-detail/{name}', [UserController::class, 'product_detail'])->name('product_detail');
 
-Route::get('/product-detail-by-category/{category}', [UserController::class, 'product_detail_by_category'])->name('product_detail_by_category');
+Route::get('/{category}', [UserController::class, 'product_detail_by_category'])->name('product_detail_by_category');
 
 Route::get('/product-detail-by-body-type/{type}', [UserController::class, 'product_detail_by_body']);
 Route::get('/product-detail-by-transmission-type/{type}', [UserController::class, 'product_detail_by_transmission']);
@@ -45,9 +45,9 @@ Route::get('/product-detail-by-doors/{type}', [UserController::class, 'product_d
 
 Route::get('/product-detail-by-brand/{brands}', [UserController::class, 'product_detail_by_brand'])->name('product_detail_by_brand');
 
-Route::get('/product-detail-by-upcoming/{id}/{category}', [UserController::class, 'product_detail_by_upcoming'])->name('product_detail_by_upcoming');
+Route::get('/upcoming/{id}/{category}', [UserController::class, 'product_detail_by_upcoming'])->name('product_detail_by_upcoming');
 
-Route::get('/product-detail-by-top-10/{id}/{category}', [UserController::class, 'product_detail_by_top_10'])->name('product_detail_by_top_10');
+Route::get('/top-10/{id}/{category}', [UserController::class, 'product_detail_by_top_10'])->name('product_detail_by_top_10');
 
 Route::prefix('administrator')->group(function () {
     Route::get('/login', [AdminController::class, 'login'])->name('admin.login');

@@ -118,6 +118,7 @@ class ProductController extends Controller
         $product->user_email = Auth::user()->email;
         $product->Body_type = $request->Body_type;
         $product->Transmission_type = $request->Transmission_type;
+        $product->slug = $request->slug;
         $product->Drive_type = $request->Drive_type;
         $product->Fuel_type = $request->Fuel_type;
         $product->Capacities = $request->Capacities;
@@ -177,6 +178,7 @@ class ProductController extends Controller
         $product->Transmission_type = $request->Transmission_type;
         $product->Drive_type = $request->Drive_type;
         $product->Fuel_type = $request->Fuel_type;
+        $product->slug = $request->slug;
         $product->Capacities = $request->Capacities;
         $product->Doors = $request->Doors;
         $product->Category = $request->Category;

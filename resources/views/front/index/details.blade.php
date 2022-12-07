@@ -1,56 +1,73 @@
 @extends('front.layout')
 @section('title')
-{{ $Products->Title }} Details Page
+    {{ $Products->Title }} Car Prices, Specifications, Interior Exterior - World Car Price
 @endsection
+@section('description')
+    Find {{ $Products->Title }} cars price. Check latest models of {{ $Products->Title }} cars with market rates also find
+    {{ $Products->Title }} new cars price list only at World Car Price
+@endsection
+@section('og')
+    <meta property="og:title" content="{{ $Products->Title }}">
+    <meta property="og:site_name" content="{{ $Products->Title }}">
+    <meta property="og:url" content="http://127.0.0.1:8000/">
+    <meta property="og:description"
+        content="Find {{ $Products->Title }} cars price. Check latest models of {{ $Products->Title }} cars with market rates also find
+    {{ $Products->Title }} new cars price list only at World Car Price">
+    <meta property="og:type" content="product">
+    <meta property="og:image" content="{{ $image->Image }}">
+@endsection
+
 @section('content')
-<main class="main">
-    <div class="container">
-        <section class="row row--grid" style="
+    <main class="main">
+        <div class="container">
+            <section class="row row--grid"
+                style="
         justify-content: center;
         border-radius: 10px;
     box-shadow: 0px 0px 5px 0px #aaa;
     padding: 50px;
     ">
-            <div class="col-12">
-                @php
-                $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
-                $country = \App\Models\Country::where('id', $UserData->country_id)->first();
-                @endphp
-            </div>
-            <div class="col-12">
-                <div class="main__title main__title--page">
-                    <h1>{{ $Products->Title }} {{ $Products->Year }}</h1>
-                    <span class="offer__price">{{ $country->symbol }} {{ $Products->Price * $country->rate }}</span>
-                    <p>
-                        {{ $Products->Short_Description }}
-                    </p>
+                <div class="col-12">
+                    @php
+                        $UserData = \App\Models\UserData::where('ip', $ip)->first('country_id');
+                        $country = \App\Models\Country::where('id', $UserData->country_id)->first();
+                    @endphp
                 </div>
-            </div>
-    <div class="row" >
-
-        <div class="col-12 col-lg-6">
-            <div class="details">
-                <div class="splide splide--details details__slider">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            @php
-                            $images = \App\Models\Images::where('product_id', $Products->id)->get();
-                            $category = \App\Models\category::where('id', $Products->Category)->first();
-                            @endphp
-                            @foreach ($images as $images)
-                            <li class="splide__slide" style="text-align: center">
-                                <img class="Car_image" src="{{ $images->Image }}" alt="{{ $Products->Title }}" style="height: 320px;">
-                            </li>
-                            @endforeach
-                        </ul>
+                <div class="col-12">
+                    <div class="main__title main__title--page">
+                        <h1>{{ $Products->Title }} {{ $Products->Year }}</h1>
+                        <span class="offer__price">{{ $country->symbol }} {{ $Products->Price * $country->rate }}</span>
+                        <p>
+                            {{ $Products->Short_Description }}
+                        </p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-          <div class="container">
-            <div class="row">
-                {{-- <div class="col-12 col-lg-4">
+                <div class="row">
+
+                    <div class="col-12 col-lg-6">
+                        <div class="details">
+                            <div class="splide splide--details details__slider">
+                                <div class="splide__track">
+                                    <ul class="splide__list">
+                                        @php
+                                            $images = \App\Models\Images::where('product_id', $Products->id)->get();
+                                            $category = \App\Models\category::where('id', $Products->Category)->first();
+                                        @endphp
+                                        @foreach ($images as $images)
+                                            <li class="splide__slide" style="text-align: center">
+                                                <img class="Car_image" src="{{ $images->Image }}"
+                                                    alt="{{ $Products->Title }}" style="height: 320px;">
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        {{-- <div class="col-12 col-lg-4">
                     <div class="offer">
                         <span class="offer__title">Browse By Brands</span>
                         <div class="offer__wrap">
@@ -81,21 +98,22 @@
 
                     </div>
                 </div> --}}
-                <div class="col-12 col-lg-8">
-                    <div class="offer">
-                        <span class="offer__title">{{ $Products->Title }} Specification</span>
-                        <p>
-                           <div class="row" style="    box-shadow: 0px 0px 5px 0px #aaa;
+                        <div class="col-12 col-lg-8">
+                            <div class="offer">
+                                <span class="offer__title">{{ $Products->Title }} Specification</span>
+                                <p>
+                                <div class="row"
+                                    style="    box-shadow: 0px 0px 5px 0px #aaa;
                            border-radius: 10px;
                            padding: 50px;">
-                            {!! $Products->Description !!}
-                           </div>
-                        </p>
+                                    {!! $Products->Description !!}
+                                </div>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-          </div>
-        </section>
-    </div>
-</main>
+            </section>
+        </div>
+    </main>
 @endsection
