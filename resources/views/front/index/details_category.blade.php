@@ -7,10 +7,8 @@ Discover all the information regarding New {{ $category->category_name }} Prices
 @endsection
 @section('content')
     <main class="main">
-
         <div class="container">
-
-            <section class="row row--grid">
+            <section class="row">
                 @if (session('error'))
                     <div class="alert alert-danger m-4 text-center ml-3">
                         {{ session('error') }}
@@ -19,7 +17,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                         </button>
                     </div>
                 @endif
-                <div class="row">
+                <div class="row adjust-row">
                     <div class="col-lg-7">
                         <div class="row">
                             <div class="col-12">
@@ -41,7 +39,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 @endphp
 
                                                 <li class="splide__slide">
-                                                    <a href="/product-detail/{{ $cars->Title }}"> <img id="product_img"
+                                                    <a href="/product-detail/{{ $cars->slug }}"> <img id="product_img"
                                                             src="{{ $images->Image }}" alt="{{ $cars->Title }}"></a>
                                                 </li>
                                             </ul>
@@ -49,9 +47,9 @@ Discover all the information regarding New {{ $category->category_name }} Prices
 
                                         <div class="car__title">
                                             <h3 class="car__name"><a class="Car_name_modify"
-                                                    href="/product-detail/{{ $cars->Title }}">{{ $cars->Title }}</a></h3>
+                                                    href="/product-detail/{{ $cars->slug }}">{{ $cars->Title }}</a></h3>
                                             <span class="car__year"><a
-                                                    href="/product-detail/{{ $cars->Title }}">{{ $cars->Year }}</a></span>
+                                                    href="/product-detail/{{ $cars->slug }}">{{ $cars->Year }}</a></span>
                                         </div>
                                         <div class="car__footer">
                                             <span class="car__price">{{ $country->symbol }}
@@ -63,7 +61,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                         </div>
                     </div>
                     @if ($carss == true)
-                        <div class="col-lg-4 offset-lg-1" style="border: 1px solid;border-radius: 10px;">
+                        <div class="col-lg-4 offset-lg-1">
                             <div class="">
                                 <div class="offer">
                                     <span class="offer__title" style="color: red">BROWSE BY BRANDS</span>
@@ -71,7 +69,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                         @foreach ($brand as $brand)
                                             <div class="col-6"
                                                 style="margin-top: 10px; text-align: center; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-brand/{{ $brand->Brand_name }}"
+                                                <a href="/{{ $category->category_name }}/{{ $brand->Brand_name }}"
                                                     style="color: black;">
                                                     <b>{{ $brand->Brand_name }}</b>
                                                 </a>
@@ -84,56 +82,56 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                         <span class="offer__title" style="color: red">BODY TYPE</span>
                                         <div class="row">
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/Coupe" style="color: black;">
+                                                <a href="/body-type/Coupe" style="color: black;">
                                                     <b>
                                                         Coupe
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/Sedan" style="color: black;">
+                                                <a href="/body-type/Sedan" style="color: black;">
                                                     <b>
                                                         Sedan
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/SUV" style="color: black;">
+                                                <a href="/body-type/SUV" style="color: black;">
                                                     <b>
                                                         SUV
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/Hatchback" style="color: black;">
+                                                <a href="/body-type/Hatchback" style="color: black;">
                                                     <b>
                                                         Hatchback
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/Convertible" style="color: black;">
+                                                <a href="/body-type/Convertible" style="color: black;">
                                                     <b>
                                                         Convertible
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/MiniTruck" style="color: black;">
+                                                <a href="/body-type/MiniTruck" style="color: black;">
                                                     <b>
                                                         MiniTruck
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/Sports" style="color: black;">
+                                                <a href="/body-type/Sports" style="color: black;">
                                                     <b>
                                                         Sports
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-body-type/Wagon" style="color: black;">
+                                                <a href="/body-type/Wagon" style="color: black;">
                                                     <b>
                                                         Wagon
                                                     </b>
@@ -146,7 +144,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                         <span class="offer__title" style="color: red">TRANSMISSION TYPE</span>
                                         <div class="row">
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-transmission-type/Automatic"
+                                                <a href="/transmission-type/Automatic"
                                                     style="color: black;">
                                                     <b>
                                                         Automatic
@@ -154,14 +152,14 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-transmission-type/Manual" style="color: black;">
+                                                <a href="/transmission-type/Manual" style="color: black;">
                                                     <b>
                                                         Manual
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-transmission-type/Electric"
+                                                <a href="/transmission-type/Electric"
                                                     style="color: black;">
                                                     <b>
                                                         Electric
@@ -169,7 +167,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-transmission-type/CVT" style="color: black;">
+                                                <a href="/transmission-type/CVT" style="color: black;">
                                                     <b>
                                                         CVT
                                                     </b>
@@ -181,7 +179,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                         <span class="offer__title" style="color: red">DRIVE TYPE</span>
                                         <div class="row">
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-drive-type/All-Wheel-Drive"
+                                                <a href="/drive-type/All-Wheel-Drive"
                                                     style="color: black;">
                                                     <b>
                                                         All Wheel Drive
@@ -189,7 +187,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-drive-type/Rear-Wheel-Drive"
+                                                <a href="/drive-type/Rear-Wheel-Drive"
                                                     style="color: black;">
                                                     <b>
                                                         Rear Wheel Drive
@@ -197,7 +195,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-drive-type/Front-Wheel-Drive"
+                                                <a href="/drive-type/Front-Wheel-Drive"
                                                     style="color: black;">
                                                     <b>
                                                         Front Wheel Drive
@@ -210,49 +208,49 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                         <span class="offer__title" style="color: red">FUEL TYPE</span>
                                         <div class="row">
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-fuel-type/Premium" style="color: black;">
+                                                <a href="/fuel-type/Premium" style="color: black;">
                                                     <b>
                                                         Premium
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-fuel-type/Gasoline" style="color: black;">
+                                                <a href="/fuel-type/Gasoline" style="color: black;">
                                                     <b>
                                                         Gasoline
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-fuel-type/Hybrid" style="color: black;">
+                                                <a href="/fuel-type/Hybrid" style="color: black;">
                                                     <b>
                                                         Hybrid
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-fuel-type/Petrol" style="color: black;">
+                                                <a href="/fuel-type/Petrol" style="color: black;">
                                                     <b>
                                                         Petrol
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-fuel-type/Electric" style="color: black;">
+                                                <a href="/fuel-type/Electric" style="color: black;">
                                                     <b>
                                                         Electric
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-fuel-type/Diesel" style="color: black;">
+                                                <a href="/fuel-type/Diesel" style="color: black;">
                                                     <b>
                                                         Diesel
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-fuel-type/CNG" style="color: black;">
+                                                <a href="/fuel-type/CNG" style="color: black;">
                                                     <b>
                                                         CNG
                                                     </b>
@@ -264,7 +262,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                         <span class="offer__title" style="color: red">CAPACITIES</span>
                                         <div class="row">
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-capacities-type/2-Seats"
+                                                <a href="/capacities-type/2-Seats"
                                                     style="color: black;">
                                                     <b>
                                                         2 Seats
@@ -272,7 +270,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-capacities-type/4-Seats"
+                                                <a href="/capacities-type/4-Seats"
                                                     style="color: black;">
                                                     <b>
                                                         4 Seats
@@ -280,7 +278,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-capacities-type/5-Seats"
+                                                <a href="/capacities-type/5-Seats"
                                                     style="color: black;">
                                                     <b>
                                                         5 Seats
@@ -288,7 +286,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-capacities-type/6-Seats"
+                                                <a href="/capacities-type/6-Seats"
                                                     style="color: black;">
                                                     <b>
                                                         6 Seats
@@ -296,7 +294,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-capacities-type/7-Seats"
+                                                <a href="/capacities-type/7-Seats"
                                                     style="color: black;">
                                                     <b>
                                                         7 Seats
@@ -304,7 +302,7 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-capacities-type/8-Seats"
+                                                <a href="/capacities-type/8-Seats"
                                                     style="color: black;">
                                                     <b>
                                                         8 Seats
@@ -318,21 +316,21 @@ Discover all the information regarding New {{ $category->category_name }} Prices
                                         <span class="offer__title" style="color: red">NUMBER OF DOORS</span>
                                         <div class="row">
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-doors/2 Doors" style="color: black;">
+                                                <a href="/doors/2 Doors" style="color: black;">
                                                     <b>
                                                         2 Doors
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-doors/4 Doors" style="color: black;">
+                                                <a href="/doors/4 Doors" style="color: black;">
                                                     <b>
                                                         4 Doors
                                                     </b>
                                                 </a>
                                             </div>
                                             <div class="col-12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                <a href="/product-detail-by-doors/5 Doors" style="color: black;">
+                                                <a href="/doors/5 Doors" style="color: black;">
                                                     <b>
                                                         5 Doors
                                                     </b>

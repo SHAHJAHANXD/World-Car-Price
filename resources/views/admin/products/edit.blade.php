@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Product Slug</label>
-                                        <input required type="text" value="{{ $Products->Slug  ?? 'No Data'}}" class="form-control" name="slug"
+                                        <input required type="text" value="{{ $Products->slug  ?? 'No Data'}}" class="form-control" name="slug"
                                             placeholder="Enter Product Slug">
                                     </div>
                                     <div class="form-group">

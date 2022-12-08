@@ -36,14 +36,14 @@ Route::get('/product-detail/{name}', [UserController::class, 'product_detail'])-
 
 Route::get('/{category}', [UserController::class, 'product_detail_by_category'])->name('product_detail_by_category');
 
-Route::get('/product-detail-by-body-type/{type}', [UserController::class, 'product_detail_by_body']);
-Route::get('/product-detail-by-transmission-type/{type}', [UserController::class, 'product_detail_by_transmission']);
-Route::get('/product-detail-by-drive-type/{type}', [UserController::class, 'product_detail_by_drive']);
-Route::get('/product-detail-by-fuel-type/{type}', [UserController::class, 'product_detail_by_fuel']);
-Route::get('/product-detail-by-capacities-type/{type}', [UserController::class, 'product_detail_by_capacities']);
-Route::get('/product-detail-by-doors/{type}', [UserController::class, 'product_detail_by_doors']);
+Route::get('/body-type/{type}', [UserController::class, 'product_detail_by_body']);
+Route::get('/transmission-type/{type}', [UserController::class, 'product_detail_by_transmission']);
+Route::get('/drive-type/{type}', [UserController::class, 'product_detail_by_drive']);
+Route::get('/fuel-type/{type}', [UserController::class, 'product_detail_by_fuel']);
+Route::get('/by-capacities-type/{type}', [UserController::class, 'product_detail_by_capacities']);
+Route::get('/by-doors/{type}', [UserController::class, 'product_detail_by_doors']);
 
-Route::get('/product-detail-by-brand/{brands}', [UserController::class, 'product_detail_by_brand'])->name('product_detail_by_brand');
+Route::get('/{category}/{brands}', [UserController::class, 'product_detail_by_brand'])->name('product_detail_by_brand');
 
 Route::get('/upcoming/{id}/{category}', [UserController::class, 'product_detail_by_upcoming'])->name('product_detail_by_upcoming');
 

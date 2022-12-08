@@ -28,7 +28,7 @@ World Car Price provides New Cars, e-cars, Bikes, e-bike launching, Specificatio
             <div class="row row--grid">
                 <div class="col-12">
                     <div class="main__title main__title--first">
-                        <h2>New Vehicle Prices 2022</h2>
+                        <h1>New Vehicle Prices 2022</h1>
                     </div>
                 </div>
             </div>

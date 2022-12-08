@@ -246,10 +246,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 @media (min-width: 768px) {
-    .row--grid {
-        margin-right: -15px;
-        margin-left: -15px;
-    }
+
 
     .row--grid .col-6,
     .row--grid .col-12 {
@@ -6725,7 +6722,11 @@ body::-webkit-scrollbar-thumb {
     .product_img {
         width: 310px;
     }
-
+    .adjust-row
+    {
+        margin-left: 0px !important;
+        width: 315px !important;
+    }
     .sign__form--profile .sign__btn {
         margin: 6px -8px 15px;
         width: 81px;

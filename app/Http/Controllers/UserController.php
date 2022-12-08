@@ -362,16 +362,11 @@ class UserController extends Controller
     public function product_detail_by_category(Request $request, $category)
     {
         $ip = $request->ip();
-
         $id = category::where('category_name', $category)->first();
         $category = category::where('category_name', $category)->first();
         $brand = Brand::where('Brand_category', $id->category_name)->get();
-        $cars = Products::where('category', $id->id)->where('status', 1)->orderBy('id', 'desc')->paginate(20);
+        $cars = Products::where('category', $id->id)->where('status', 1)->orderBy('id', 'desc')->get();
         $carss = Products::where('category', $id->id)->where('status', 1)->orderBy('id', 'desc')->first();
-        if ($request->ajax()) {
-    		$view = view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip' , 'id'))->render();
-            return response()->json(['html'=>$view]);
-        }
         if ($ip == true) {
             return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip' , 'id'));
         } else {
@@ -379,33 +374,29 @@ class UserController extends Controller
             return view('front.index.details_category', compact('cars', 'carss', 'category', 'brand', 'ip', 'id'));
         }
     }
-    public function product_detail_by_brand(Request $request, $brands)
+    public function product_detail_by_brand(Request $request, $category, $brands)
     {
-        $found = Products::where('Brand', $brands)->count();
-        if ($found == 0) {
-            return redirect()->back()->with('error', 'Products with this brands are not available!');
-        } else {
+        // dd($category);
             $ip = $request->ip();
             $carss = Products::where('Brand', $brands)->first();
-            $category = category::where('id', $carss->Category)->first();
-            $brand = Brand::where('Brand_category', $category->category_name)->get();
+            $brand = Brand::where('Brand_category', $category)->get();
             $cars = Products::where('Brand', $brands)->where('status', 1)->orderBy('id', 'desc')->get();
-
             if ($ip == true) {
                 return view('front.index.details_brand', compact('cars', 'brands','carss', 'category', 'brand', 'ip'));
             } else {
                 $ip = "127.0.0.1";
                 return view('front.index.details_brand', compact('cars','brands' ,'carss', 'category', 'brand', 'ip'));
             }
-        }
+
     }
-    public function product_detail_by_top_10(Request $request, $id, $category)
+    public function product_detail_by_top_10(Request $request, $id, $name)
     {
+        $category = "Top 10" ." ". $name;
         $ip = $request->ip();
-        $category = category::where('category_name', $category)->first();
-        $brand = Brand::where('Brand_category', $category)->get();
-        $cars = Products::where('top_10', 'Yes')->where('Category', $id)->where('status', 1)->orderBy('id', 'desc')->get();
-        $carss = Products::where('top_10', 'Yes')->where('Category', $id)->where('status', 1)->orderBy('id', 'desc')->first();
+        $id = category::where('category_name', $category)->first();
+        $brand = Brand::where('Brand_category', $name)->get();
+        $cars = Products::where('top_10', 'Yes')->where('Category_name', $name)->where('status', 1)->orderBy('id', 'desc')->get();
+        $carss = Products::where('top_10', 'Yes')->where('Category_name', $name)->where('status', 1)->orderBy('id', 'desc')->first();
         if ($ip == true) {
             return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip', 'category'));
         } else {
@@ -413,13 +404,14 @@ class UserController extends Controller
             return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip', 'category'));
         }
     }
-    public function product_detail_by_upcoming(Request $request, $id, $category)
+    public function product_detail_by_upcoming(Request $request, $id, $name)
     {
+        $category = "Upcoming" ." ". $name;
         $ip = $request->ip();
-        $category = category::where('category_name', $category)->first();
-        $brand = Brand::where('Brand_category', $category)->get();
-        $carss = Products::where('Upcoming', 'Yes')->where('Category', $id)->where('status', 1)->orderBy('id', 'desc')->get();
-        $cars = Products::where('Upcoming', 'Yes')->where('Category', $id)->where('status', 1)->orderBy('id', 'desc')->get();
+        $id = category::where('category_name', $category)->first();
+        $brand = Brand::where('Brand_category', $name)->get();
+        $cars = Products::where('Upcoming', 'Yes')->where('Category_name', $name)->where('status', 1)->orderBy('id', 'desc')->get();
+        $carss = Products::where('Upcoming', 'Yes')->where('Category_name', $name)->where('status', 1)->orderBy('id', 'desc')->first();
         if ($ip == true) {
             return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip', 'category'));
         } else {
@@ -427,6 +419,7 @@ class UserController extends Controller
             return view('front.index.details_brand', compact('cars', 'carss', 'brand', 'ip', 'category'));
         }
     }
+
     public function DeleteFalseCeiling($id)
     {
         $category = FalseCeiling::where('id', $id)->first();
